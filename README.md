@@ -14,16 +14,22 @@ Resursele multimedia ce pot fi incluse într-un album pot fi stocate local sau r
 
 Framework-ul creat va putea fi configurat pe baza unor parametri – de pildă, dimensiunea zonei de redare a unui album, URL-ul albumului, maniera de vizualizare (interactivă sau nu), inhibarea afișării controalelor de interfață etc. Acești parametri pot fi specificați prin program sau preluați dintr-un document JSON (JavaScript Object Notation).
 
+
 Bonus-uri
+
 “Răsfoirea” albumului via instrucțiuni date prin intermediul unei interfețe în linia de comandă (CLI – Command Line Interface) ori pe baza unor comenzi vocale.
 Recurgerea la WebGL pentru realizarea unei interfețe 3D a albumului.
 Oferirea de suport pentru internaționalizare și accesibilitate Web.
 Includerea de module suplimentare pentru realizarea altor operații de interes – de exemplu, detectarea de resurse identice, recomandarea unor resurse similare, aplicarea de efecte vizuale la redarea unei/unor/tuturor resurse disponibile într-un album etc.
 Resurse de interes
 
+
 Filmul materiei “Tehnologii Web” inițiată și predată de Sabin Buraga (FII, UAIC) –
+
 https://profs.info.uaic.ro/~busaco/teach/courses/web/web-film.html
+
 Filmul disciplinei “Dezvoltarea aplicațiilor Web la nivel de client” inițiată și predată de Sabin Buraga (FII, UAIC) –
+
 https://profs.info.uaic.ro/~busaco/teach/courses/cliw/web-film.html
 
 Awesome Lists – https://github.com/sindresorhus/awesome
