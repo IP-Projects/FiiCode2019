@@ -20,9 +20,16 @@ Recurgerea la WebGL pentru realizarea unei interfețe 3D a albumului.
 Oferirea de suport pentru internaționalizare și accesibilitate Web.
 Includerea de module suplimentare pentru realizarea altor operații de interes – de exemplu, detectarea de resurse identice, recomandarea unor resurse similare, aplicarea de efecte vizuale la redarea unei/unor/tuturor resurse disponibile într-un album etc.
 Resurse de interes
-Filmul materiei “Tehnologii Web” inițiată și predată de Sabin Buraga (FII, UAIC) – https://profs.info.uaic.ro/~busaco/teach/courses/web/web-film.html
-Filmul disciplinei “Dezvoltarea aplicațiilor Web la nivel de client” inițiată și predată de Sabin Buraga (FII, UAIC) – https://profs.info.uaic.ro/~busaco/teach/courses/cliw/web-film.html
+
+Filmul materiei “Tehnologii Web” inițiată și predată de Sabin Buraga (FII, UAIC) –
+https://profs.info.uaic.ro/~busaco/teach/courses/web/web-film.html
+Filmul disciplinei “Dezvoltarea aplicațiilor Web la nivel de client” inițiată și predată de Sabin Buraga (FII, UAIC) –
+https://profs.info.uaic.ro/~busaco/teach/courses/cliw/web-film.html
+
 Awesome Lists – https://github.com/sindresorhus/awesome
+
 There is a bot for that – https://thereisabotforthat.com/
+
 Student Developer Pack – https://education.github.com/pack
+
  
