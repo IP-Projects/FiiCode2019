@@ -1,0 +1,12 @@
+{
+  "name": "@multimedia-album-management",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish:library" : "npm publish --access public"
+  },
+  "author": "Rising Edge Team",
+  "license": "MIT"
+}
