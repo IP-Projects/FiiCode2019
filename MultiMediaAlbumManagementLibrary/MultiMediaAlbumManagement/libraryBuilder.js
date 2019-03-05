@@ -7,9 +7,9 @@ const concat = require('concat');
     './dist/scripts.js',
     './dist/main.js',
   ]
-  await fs.ensureDir('../LibraryDistributionBuild')
-  await concat(files, '../LibraryDistributionBuild/index.js');
-  await fs.copyFile('./dist/styles.css', '../LibraryDistributionBuild/styles.css')
-  await fs.copy('./dist/assets/', '../LibraryDistributionBuild/assets/' )
+  await fs.ensureDir('../DistributionPackage')
+  await concat(files, '../DistributionPackage/index.js');
+  await fs.copyFile('./dist/styles.css', '../DistributionPackage/styles.css')
+  await fs.copy('./dist/assets/', '../DistributionPackage/assets/' )
 
 })()

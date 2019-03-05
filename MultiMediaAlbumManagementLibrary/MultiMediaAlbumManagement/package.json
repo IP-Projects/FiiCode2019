@@ -9,7 +9,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:library": "ng build --prod --output-hashing none && node libraryBuilder.js",
-    "buildAndPublish:library": "ng build --prod --output-hashing none && node libraryBuilder.js && python ../LibraryDistributionBuild/publishPackageAndUpdateVersion.py"
+    "buildAndPublish:library": "ng build --prod --output-hashing none && node libraryBuilder.js && python ../DistributionPackage/publishPackageAndUpdateVersion.py",
+    "buildAndPublish:extras": "python ../LibraryDistributionBuild/ExtrasPackage.py"
   },
   "private": true,
   "dependencies": {
@@ -22,11 +23,13 @@
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
+    "bootstrap": "^4.3.1",
     "concat": "^1.0.3",
     "core-js": "^2.5.4",
     "document-register-element": "^1.7.2",
     "fs": "0.0.1-security",
     "fs-extra": "^7.0.1",
+    "jquery": "^3.3.1",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
