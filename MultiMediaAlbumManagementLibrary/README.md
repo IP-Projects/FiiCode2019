@@ -17,3 +17,11 @@ export class AppModule { }
 ```
 
 for addition modules you will have to install the extras with npm install @multimedia-album-management-extras
+
+
+if you use it in plain html with js
+you will have to clone the distribution folder
+and import the library 
+to use the input fields , you will have to initialize the component in the html page then 
+eg
+<app-root title = "something"></app-root>

@@ -1,7 +1,19 @@
 $amountOfSizes: 100;
-@for $i from 1 through $amountOfSizes{
-    .w-#{$i} { width: $i% };
-    .h-#{$i} { width: $i% };
-    .w-#{$i * 5} { width: $i* 5% };
-    .h-#{$i * 5} { width: $i * 5% };
+@for $i from 1 through $amountOfSizes {
+  .w-#{$i} {
+    width: $i#{"%"};
+  }
+  .h-#{$i} {
+    height: $i#{"%"};
+  }
+  .w-#{$i * 5}px {
+    width: $i * 5px;
+  }
+  .h-#{$i * 5}px {
+    height: $i * 5px;
+  }
+
+  .grid-size-#{$i} {
+    width: round(100 / $i)#{"%"};
+  }
 }

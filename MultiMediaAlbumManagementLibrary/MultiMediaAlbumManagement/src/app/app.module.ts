@@ -1,23 +1,22 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { APP_BASE_HREF } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import {APP_BASE_HREF} from '@angular/common';
-import { MultimediaAlbumComponent } from './multimedia-album/multimedia-album.component';
-import { MultimediaEntityComponent } from './multimedia-entity/multimedia-entity.component';
+import { AppRoutingModule } from './core/app-routing.module';
+import { AppComponent } from './core/app.component';
+import {
+    CollectionOfMultimediaAlbumsComponent
+} from './features/collection-of-multimedia-albums/collection-of-multimedia-albums.component';
+import { MultimediaAlbumComponent } from './features/multimedia-album/multimedia-album.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MultimediaAlbumComponent,
-    MultimediaEntityComponent
+    CollectionOfMultimediaAlbumsComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [{provide: APP_BASE_HREF, useValue : '/' }],
+  imports: [BrowserModule, AppRoutingModule],
+  providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
