@@ -13,7 +13,7 @@ def updateJsonFile():
     jsonFile.close()
 
 def publishPackage():
-    subprocess.call(['npm','run','publish:extras'])
+    subprocess.call('npm run publish:core', shell=True)
 
 updateJsonFile()
 publishPackage()

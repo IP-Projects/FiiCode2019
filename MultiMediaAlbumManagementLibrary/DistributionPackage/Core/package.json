@@ -1,0 +1,15 @@
+{
+  "name": "@multimedia-album-management/core",
+  "version": "1.0.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish:core": "npm publish --access public"
+  },
+  "directories": {
+    "assets": "./assets"
+  },
+  "author": "Rising Edge Team",
+  "license": "MIT"
+}

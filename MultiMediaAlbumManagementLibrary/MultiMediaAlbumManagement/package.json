@@ -9,8 +9,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:library": "ng build --prod --output-hashing none && node libraryBuilder.js",
-    "buildAndPublish:library": "ng build --prod --output-hashing none && node libraryBuilder.js && python ../DistributionPackage/publishPackageAndUpdateVersion.py",
-    "buildAndPublish:extras": "python ../LibraryDistributionBuild/ExtrasPackage.py"
+    "buildAndPublish:library": "ng build --prod --output-hashing none && node libraryBuilder.js && python ../DistributionPackage/Core/publishPackageAndUpdateVersion.py",
+    "buildAndPublish:extras": "python ../DistributionPackage/publishPackageAndUpdateVersion.py"
   },
   "private": true,
   "dependencies": {
