@@ -1,6 +1,5 @@
-import { ICollectionOptions } from 'src/app/shared/interfaces/ICollectionOptions';
-
 import { Component, Input, OnInit } from '@angular/core';
+import { ICollectionOptions } from 'src/app/shared/interfaces/ICollectionOptions';
 
 @Component({
   selector: "app-collection-of-multimedia-albums",
@@ -15,15 +14,15 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
   gridSize: Number; // number of albums displayed on a row
 
   @Input()
-  collectionUrl:String; // api call to retrieve the albums in the collection
+  collectionUrl: String; // api call to retrieve the albums in the collection
 
   @Input()
-  collectionData:String; // this will be primary data source, if empty the api will be called
+  collectionData: String; // this will be primary data source, if empty the api will be called
 
   // used to redirect to the album
   //placeholders for the images of the album(in 3d mode or image in 2d)
   @Input()
-  options:ICollectionOptions;
+  options: ICollectionOptions;
 
   _gridSize;
   _collectionData;
@@ -32,16 +31,5 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
   ngOnInit() {
     // this._gridSize = "grid-size-" + this.gridSize;
     // this._gridSize = "grid-size-" + this.options.gridSize
-    this._collectionData = [
-      {
-         item: "banana"
-      },
-      {
-         item: "apple"
-      },
-      {
-         item: "lemon"
-      }
-   ]
   }
 }

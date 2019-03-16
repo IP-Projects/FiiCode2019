@@ -1,0 +1,13 @@
+<div *ngFor="let album of _collectionData">
+  <div [ngSwitch]="album.type">
+    <app-pdf-module source="{{ album.data }}" *ngSwitchCase="'pdf'"> </app-pdf-module>
+
+    <div>
+      <aaa *ngIf="0"></aaa>
+    </div>
+
+    <div *ngSwitchDefault>
+      <p>default</p>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,8 @@
 <div class="{{ _gridSize }}">
-    {{gridSize}}
-    <div *ngFor="let album of _collectionData">{{album.item}}</div>
+  {{ gridSize }}
+
+  <app-collection-loader
+    loadElements="true"
+    path="../../../../../node_modules/elements/elements.js"
+  ></app-collection-loader>
 </div>
