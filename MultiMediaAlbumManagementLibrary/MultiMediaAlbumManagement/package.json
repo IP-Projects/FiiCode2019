@@ -1,5 +1,5 @@
 {
-  "name": "multi-media-album-management",
+  "name": "multi-media-album-management-core",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -9,8 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:library": "ng build --prod --output-hashing none && node libraryBuilder.js",
-    "buildAndPublish:library": "ng build --prod --output-hashing none && node libraryBuilder.js && python ../DistributionPackage/Core/publishPackageAndUpdateVersion.py",
-    "buildAndPublish:extras": "python ../DistributionPackage/publishPackageAndUpdateVersion.py"
+    "buildAndPublish:library": "ng build --prod --output-hashing none && node libraryBuilder.js && python ../DistributionPackage/Core/publishPackageAndUpdateVersion.py"
   },
   "private": true,
   "dependencies": {
@@ -25,7 +24,7 @@
     "@angular/router": "~7.2.0",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
-    "document-register-element": "^1.7.2",
+    "document-register-element": "1.8.1",
     "jquery": "^3.3.1",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
