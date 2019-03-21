@@ -1,15 +1,22 @@
-<div *ngFor="let entity of _albumData">
-  <div [ngSwitch]="entity.type">
-    <app-pdf-module source="{{ entity.data }}" *ngSwitchCase="'pdf'">
-    </app-pdf-module>
-
-    <div *ngIf="X - moduleLoaded">
-      <app-X-module source="{{ entity.data }}" *ngSwitchCase="'X'">
-      </app-X-module>
+<div *ngFor="let album of _collectionData">
+  <div [ngSwitch]="album.type">
+    <div *ngIf="1">
+      <app-pdf-module source="{{ album.data }}" *ngSwitchCase="'pdf'"> </app-pdf-module>
     </div>
-
-    <div *ngSwitchDefault>
-      <p>default</p>
+    <div *ngIf="1">
+      <app-svg-module source="{{ album.data }}" *ngSwitchCase="'svg'"> </app-svg-module>
+    </div>
+    <div *ngIf="1">
+      <app-youtube-module source="{{ album.data }}" *ngSwitchCase="'youtube'"> </app-youtube-module>
+    </div>
+    <div>
+      <app-audio-module source="{{ album.data }}" *ngSwitchCase="'audio'"> </app-audio-module>
+    </div>
+    <div>
+      <app-video-module source="{{ album.data }}" *ngSwitchCase="'video'"> </app-video-module>
+    </div>
+    <div>
+      <app-image-module source="{{ album.data }}" *ngSwitchCase="'image'"> </app-image-module>
     </div>
   </div>
 </div>

@@ -1,6 +1,9 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { PdfModuleComponent } from '@multimedia-album-management/extras/pdf-module';
+import { SvgModuleComponent } from '@multimedia-album-management/extras/svg-module';
+import { YoutubeModuleComponent } from '@multimedia-album-management/extras/youtube-module';
 
 import { AppRoutingModule } from './core/app-routing.module';
 import { AppComponent } from './core/app.component';
@@ -14,10 +17,7 @@ import { AlbumLoaderComponent } from './features/multimedia-album/album-loader/a
 import { MultimediaAlbumComponent } from './features/multimedia-album/multimedia-album.component';
 import { AudioModuleComponent } from './shared/modularComponents/audio-module/audio-module.component';
 import { ImageModuleComponent } from './shared/modularComponents/image-module/image-module.component';
-import { PdfModuleComponent } from './shared/modularComponents/pdf-module/pdf-module.component';
-import { SvgModuleComponent } from './shared/modularComponents/svg-module/svg-module.component';
 import { VideoModuleComponent } from './shared/modularComponents/video-module/video-module.component';
-import { YoutubeModuleComponent } from './shared/modularComponents/youtube-module/youtube-module.component';
 
 @NgModule({
   declarations: [

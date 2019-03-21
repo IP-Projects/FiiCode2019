@@ -16,29 +16,20 @@ export class CollectionLoaderComponent implements OnInit {
   _collectionData;
 
   ngOnInit() {
-    console.log(this.loadElements);
-    if (JSON.parse(this.loadElements)) {
-      this.importLoader(this.path);
-    }
     this._collectionData = [
       {
         type: "pdf",
         data: "http://www.pdf995.com/samples/pdf.pdf"
       },
-      { type: "str", data: "apple" }
+      {
+        type: "svg",
+        data: "https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/aa.svg"
+      },
+      {
+        type: "youtube",
+        data: "https://www.youtube.com/watch?v=l27YKW6VXPY"
+      }
     ];
-  }
-
-  importLoader(path) {
-    console.log(this.path);
-    try {
-      require("@multimedia-album-management/extras");
-    } catch (e) {
-      console.error("Modules not install by user or npm");
-      this.path = "@multimedia-album-management/extras";
-      console.log(this.path);
-      return;
-    }
   }
 
   // a(){

@@ -37,11 +37,12 @@
          * @return {?}
          */
             function () {
+                this.source = this.source.replace("watch?v=", "embed/");
             };
         YoutubeModuleComponent.decorators = [
             { type: i0.Component, args: [{
-                        selector: 'app-youtube-module',
-                        template: "\n  <iframe\n  [src]=\"sanitizer.bypassSecurityTrustResourceUrl(source)\"\n  frameborder=\"0\"\n  allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n  allowfullscreen\n  style=\"height:100%;width:100%;overflow:auto;border: 0px;\"\n  ></iframe>\n\n  "
+                        selector: "app-youtube-module",
+                        template: "\n    <iframe\n      [src]=\"sanitizer.bypassSecurityTrustResourceUrl(source)\"\n      frameborder=\"0\"\n      allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n      allowfullscreen\n      style=\"height:100%;width:100%;overflow:auto;border: 0px;\"\n    ></iframe>\n  "
                     }] }
         ];
         /** @nocollapse */

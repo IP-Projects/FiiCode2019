@@ -22,30 +22,30 @@ export class AlbumLoaderComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    if (JSON.parse(this.loadExtraModules)) {
-      this.loadExtraModulesFunction();
-    }
+    // if (JSON.parse(this.loadExtraModules)) {
+    //   this.loadExtraModulesFunction();
+    // }
   }
 
-  loadExtraModulesFunction() {
-    if (!(this.pathToExtraModules == null || typeof (this.pathToExtraModules == undefined))) {
-      try {
-        require.resolve("/node_modules/@multimedia-album-management/extras");
-        this.pathToExtraModules = "/node_modules/@multimedia-album-management/extras";
-      } catch (e) {
-        console.error("Modules not install by user or npm");
-        return;
-      }
+  // loadExtraModulesFunction() {
+  //   if (!(this.pathToExtraModules == null || typeof (this.pathToExtraModules == undefined))) {
+  //     try {
+  //       require.resolve("/node_modules/@multimedia-album-management/extras");
+  //       this.pathToExtraModules = "/node_modules/@multimedia-album-management/extras";
+  //     } catch (e) {
+  //       console.error("Modules not install by user or npm");
+  //       return;
+  //     }
 
-      if (JSON.parse(this.loadPdf)) {
-        require(this.pathToExtraModules + "/pdf-module/index.js");
-      }
-      if (JSON.parse(this.loadSvg + "/svg-module/index.js")) {
-        require(this.pathToExtraModules);
-      }
-      if (JSON.parse(this.loadYoutube + "/youtube-module/index.js")) {
-        require(this.pathToExtraModules);
-      }
-    }
-  }
+  //     if (JSON.parse(this.loadPdf)) {
+  //       require(this.pathToExtraModules + "/pdf-module/index.js");
+  //     }
+  //     if (JSON.parse(this.loadSvg + "/svg-module/index.js")) {
+  //       require(this.pathToExtraModules);
+  //     }
+  //     if (JSON.parse(this.loadYoutube + "/youtube-module/index.js")) {
+  //       require(this.pathToExtraModules);
+  //     }
+  //   }
+  // }
 }

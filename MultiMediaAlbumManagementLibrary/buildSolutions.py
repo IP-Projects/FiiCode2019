@@ -39,4 +39,4 @@ def copyExtrasToDistribution():
 buildExtras()
 copyExtrasToDistribution()
 copyExtrasToMain()
-buildLibrary()
+# buildLibrary()

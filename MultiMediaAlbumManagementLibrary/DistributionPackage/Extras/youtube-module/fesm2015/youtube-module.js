@@ -1,5 +1,5 @@
 import { DomSanitizer } from '@angular/platform-browser';
-import { Injectable, NgModule, Component, Input, defineInjectable } from '@angular/core';
+import { Injectable, Component, Input, NgModule, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -32,20 +32,20 @@ class YoutubeModuleComponent {
      * @return {?}
      */
     ngOnInit() {
+        this.source = this.source.replace("watch?v=", "embed/");
     }
 }
 YoutubeModuleComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-youtube-module',
+                selector: "app-youtube-module",
                 template: `
-  <iframe
-  [src]="sanitizer.bypassSecurityTrustResourceUrl(source)"
-  frameborder="0"
-  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen
-  style="height:100%;width:100%;overflow:auto;border: 0px;"
-  ></iframe>
-
+    <iframe
+      [src]="sanitizer.bypassSecurityTrustResourceUrl(source)"
+      frameborder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      style="height:100%;width:100%;overflow:auto;border: 0px;"
+    ></iframe>
   `
             }] }
 ];
