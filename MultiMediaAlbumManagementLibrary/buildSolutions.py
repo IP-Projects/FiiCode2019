@@ -1,20 +1,5 @@
 import json,subprocess,os,shutil
 
-def buildPackages():
-    os.chdir("./MultiMediaAlbumManagement")
-    # subprocess.call('npm run build:library', shell=True)
-    os.chdir("../")
-    os.chdir("./MultiMediaAlbumManagement-extras")
-    for folder in os.listdir("./"):
-        os.chdir("./" + folder + '/')
-        subprocess.call('npm run build:extras', shell=True)
-        os.chdir("../")
-    os.chdir("../")
-
-def copyExtrasToMain():
-    copyDirectory("./DistributionPackage/Extras","./MultiMediaAlbumManagement/node_modules/")
-    os.chdir("./MultiMediaAlbumManagement/node_modules/@multimedia-album-management/extras")
- 
 def copyDirectory(src, dest):
     try:
         shutil.copytree(src, dest)
@@ -25,4 +10,33 @@ def copyDirectory(src, dest):
     except OSError as e:
         print('Directory not copied. Error: %s' % e)
 
-buildPackages()
+def buildLibrary():
+    os.chdir("./MultiMediaAlbumManagement")
+    subprocess.call('npm run build:library', shell=True)
+    os.chdir("../")
+
+    
+def buildExtras():
+    os.chdir("./MultiMediaAlbumManagement-extras")
+    subprocess.call('npm run build:all', shell=True)
+    os.chdir("../")
+
+def copyExtrasToMain():
+    if os.path.isdir("./MultiMediaAlbumManagement/node_modules/@multimedia-album-management/extras"):
+            shutil.rmtree("./MultiMediaAlbumManagement/node_modules/@multimedia-album-management/extras")
+    copyDirectory("./DistributionPackage/Extras","./MultiMediaAlbumManagement/node_modules/@multimedia-album-management/extras")
+
+def copyExtrasToDistribution():
+    os.chdir("./MultiMediaAlbumManagement-extras/dist")
+    for folder in os.listdir("./"):
+        if os.path.isdir("../../DistributionPackage/Extras/"+folder):
+            shutil.rmtree("../../DistributionPackage/Extras/"+folder)
+        copyDirectory("./" + folder,"../../DistributionPackage/Extras/"+folder)
+    os.chdir("../../")
+
+
+
+buildExtras()
+copyExtrasToDistribution()
+copyExtrasToMain()
+buildLibrary()

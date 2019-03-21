@@ -1,0 +1,42 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "pdf-module": [
+        "dist/pdf-module"
+      ],
+      "pdf-module/*": [
+        "dist/pdf-module/*"
+      ],
+      "svg-module": [
+        "dist/svg-module"
+      ],
+      "svg-module/*": [
+        "dist/svg-module/*"
+      ],
+      "youtube-module": [
+        "dist/youtube-module"
+      ],
+      "youtube-module/*": [
+        "dist/youtube-module/*"
+      ]
+    }
+  }
+}

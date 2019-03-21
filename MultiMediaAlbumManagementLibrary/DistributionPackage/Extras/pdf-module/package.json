@@ -1,0 +1,21 @@
+{
+  "name": "pdf-module",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^7.2.0",
+    "@angular/core": "^7.2.0"
+  },
+  "main": "bundles/pdf-module.umd.js",
+  "module": "fesm5/pdf-module.js",
+  "es2015": "fesm2015/pdf-module.js",
+  "esm5": "esm5/pdf-module.js",
+  "esm2015": "esm2015/pdf-module.js",
+  "fesm5": "fesm5/pdf-module.js",
+  "fesm2015": "fesm2015/pdf-module.js",
+  "typings": "pdf-module.d.ts",
+  "metadata": "pdf-module.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}
