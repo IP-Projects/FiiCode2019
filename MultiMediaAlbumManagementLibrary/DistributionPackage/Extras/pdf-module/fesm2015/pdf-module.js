@@ -1,5 +1,5 @@
 import { DomSanitizer } from '@angular/platform-browser';
-import { Injectable, Component, Input, NgModule, defineInjectable } from '@angular/core';
+import { Injectable, Component, Input, ViewEncapsulation, NgModule, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -31,19 +31,19 @@ class PdfModuleComponent {
     /**
      * @return {?}
      */
-    ngOnInit() {
-    }
+    ngOnInit() { }
 }
 PdfModuleComponent.decorators = [
     { type: Component, args: [{
-                selector: 'app-pdf-module',
+                selector: "app-pdf-module",
                 template: `
-  <iframe
-  [src]="sanitizer.bypassSecurityTrustResourceUrl(source)"
-  style="height:100%;width:100%;overflow:auto;border: 0px;"
-  >
-  </iframe>
-  `
+    <iframe
+      [src]="sanitizer.bypassSecurityTrustResourceUrl(source)"
+      style="height:100%;width:100%;overflow:auto;border: 0px;"
+    >
+    </iframe>
+  `,
+                encapsulation: ViewEncapsulation.Native
             }] }
 ];
 /** @nocollapse */

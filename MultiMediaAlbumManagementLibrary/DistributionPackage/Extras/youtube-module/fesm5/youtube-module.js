@@ -1,5 +1,5 @@
 import { DomSanitizer } from '@angular/platform-browser';
-import { Injectable, Component, Input, NgModule, defineInjectable } from '@angular/core';
+import { Injectable, Component, Input, ViewEncapsulation, NgModule, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -39,7 +39,8 @@ var YoutubeModuleComponent = /** @class */ (function () {
     YoutubeModuleComponent.decorators = [
         { type: Component, args: [{
                     selector: "app-youtube-module",
-                    template: "\n    <iframe\n      [src]=\"sanitizer.bypassSecurityTrustResourceUrl(source)\"\n      frameborder=\"0\"\n      allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n      allowfullscreen\n      style=\"height:100%;width:100%;overflow:auto;border: 0px;\"\n    ></iframe>\n  "
+                    template: "\n    <iframe\n      [src]=\"sanitizer.bypassSecurityTrustResourceUrl(source)\"\n      frameborder=\"0\"\n      allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n      allowfullscreen\n      style=\"height:100%;width:100%;overflow:auto;border: 0px;\"\n    ></iframe>\n  ",
+                    encapsulation: ViewEncapsulation.Native
                 }] }
     ];
     /** @nocollapse */

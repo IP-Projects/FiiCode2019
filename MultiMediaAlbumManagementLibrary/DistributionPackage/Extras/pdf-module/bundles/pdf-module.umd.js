@@ -36,12 +36,12 @@
         PdfModuleComponent.prototype.ngOnInit = /**
          * @return {?}
          */
-            function () {
-            };
+            function () { };
         PdfModuleComponent.decorators = [
             { type: i0.Component, args: [{
-                        selector: 'app-pdf-module',
-                        template: "\n  <iframe\n  [src]=\"sanitizer.bypassSecurityTrustResourceUrl(source)\"\n  style=\"height:100%;width:100%;overflow:auto;border: 0px;\"\n  >\n  </iframe>\n  "
+                        selector: "app-pdf-module",
+                        template: "\n    <iframe\n      [src]=\"sanitizer.bypassSecurityTrustResourceUrl(source)\"\n      style=\"height:100%;width:100%;overflow:auto;border: 0px;\"\n    >\n    </iframe>\n  ",
+                        encapsulation: i0.ViewEncapsulation.Native
                     }] }
         ];
         /** @nocollapse */

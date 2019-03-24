@@ -1,5 +1,5 @@
 import { DomSanitizer } from '@angular/platform-browser';
-import { Injectable, Component, Input, NgModule, defineInjectable } from '@angular/core';
+import { Injectable, Component, Input, ViewEncapsulation, NgModule, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -33,12 +33,12 @@ var SvgModuleComponent = /** @class */ (function () {
     SvgModuleComponent.prototype.ngOnInit = /**
      * @return {?}
      */
-    function () {
-    };
+    function () { };
     SvgModuleComponent.decorators = [
         { type: Component, args: [{
-                    selector: 'app-svg-module',
-                    template: "\n  <iframe\n  [src]=\"sanitizer.bypassSecurityTrustResourceUrl(source)\"\n  style=\"height:100%;width:100%;overflow:auto;border: 0px;\"\n>\n</iframe>\n\n  "
+                    selector: "app-svg-module",
+                    template: "\n    <iframe\n      [src]=\"sanitizer.bypassSecurityTrustResourceUrl(source)\"\n      style=\"height:100%;width:100%;overflow:auto;border: 0px;\"\n    >\n    </iframe>\n  ",
+                    encapsulation: ViewEncapsulation.Native
                 }] }
     ];
     /** @nocollapse */

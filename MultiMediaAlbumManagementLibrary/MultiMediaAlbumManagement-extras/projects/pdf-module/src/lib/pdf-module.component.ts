@@ -1,16 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, OnInit, Input, ViewEncapsulation } from "@angular/core";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
-  selector: 'app-pdf-module',
+  selector: "app-pdf-module",
   template: `
-  <iframe
-  [src]="sanitizer.bypassSecurityTrustResourceUrl(source)"
-  style="height:100%;width:100%;overflow:auto;border: 0px;"
-  >
-  </iframe>
+    <iframe
+      [src]="sanitizer.bypassSecurityTrustResourceUrl(source)"
+      style="height:100%;width:100%;overflow:auto;border: 0px;"
+    >
+    </iframe>
   `,
-  styles: []
+  styles: [],
+  encapsulation: ViewEncapsulation.None
 })
 export class PdfModuleComponent implements OnInit {
   @Input()
@@ -18,8 +19,5 @@ export class PdfModuleComponent implements OnInit {
 
   constructor(public sanitizer: DomSanitizer) {}
 
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

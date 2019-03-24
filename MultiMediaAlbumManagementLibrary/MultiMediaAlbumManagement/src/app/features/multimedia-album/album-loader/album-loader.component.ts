@@ -19,6 +19,7 @@ export class AlbumLoaderComponent implements OnInit {
   @Input()
   pathToExtraModules: string;
 
+  _collectionData;
   constructor() {}
 
   ngOnInit() {

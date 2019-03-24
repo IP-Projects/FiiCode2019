@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-youtube-module",
@@ -12,7 +12,8 @@ import { DomSanitizer } from '@angular/platform-browser';
       style="height:100%;width:100%;overflow:auto;border: 0px;"
     ></iframe>
   `,
-  styles: []
+  styles: [],
+  encapsulation: ViewEncapsulation.None
 })
 export class YoutubeModuleComponent implements OnInit {
   @Input()

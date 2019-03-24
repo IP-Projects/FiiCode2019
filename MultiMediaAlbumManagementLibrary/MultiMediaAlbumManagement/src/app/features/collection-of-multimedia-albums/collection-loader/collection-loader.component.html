@@ -1,22 +1,22 @@
 <div *ngFor="let album of _collectionData">
   <div [ngSwitch]="album.type">
-    <div>
-      <app-audio-module source="{{ album.data }}" *ngSwitchCase="'audio'"> </app-audio-module>
+    <div *ngSwitchCase="'audio'">
+      <app-audio-module source="{{ album.data }}"> </app-audio-module>
     </div>
-    <div>
-      <app-video-module source="{{ album.data }}" *ngSwitchCase="'video'"> </app-video-module>
+    <div *ngSwitchCase="'video'">
+      <app-video-module source="{{ album.data }}"> </app-video-module>
     </div>
-    <div>
-      <app-image-module source="{{ album.data }}" *ngSwitchCase="'image'"> </app-image-module>
+    <div *ngSwitchCase="'image'">
+      <app-image-module source="{{ album.data }}"> </app-image-module>
     </div>
-    <div *ngIf="1">
-      <app-pdf-module source="{{ album.data }}" *ngSwitchCase="'pdf'"> </app-pdf-module>
+    <div *ngSwitchCase="'pdf'">
+      <app-pdf-module source="{{ album.data }}" *ngIf="1"> </app-pdf-module>
     </div>
-    <div *ngIf="1">
-      <app-svg-module source="{{ album.data }}" *ngSwitchCase="'svg'"> </app-svg-module>
+    <div *ngSwitchCase="'svg'">
+      <app-svg-module source="{{ album.data }}" *ngIf="1"> </app-svg-module>
     </div>
-    <div *ngIf="1">
-      <app-youtube-module source="{{ album.data }}" *ngSwitchCase="'youtube'"> </app-youtube-module>
+    <div *ngSwitchCase="'youtube'">
+      <app-youtube-module source="{{ album.data }}" *ngIf="1"> </app-youtube-module>
     </div>
   </div>
 </div>

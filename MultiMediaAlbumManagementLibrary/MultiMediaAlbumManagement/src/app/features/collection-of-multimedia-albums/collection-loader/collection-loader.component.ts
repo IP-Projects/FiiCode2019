@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-
+import { PdfModuleComponent } from "@multimedia-album-management/extras/pdf-module";
+import { Component, Input, OnInit } from "@angular/core";
 @Component({
   selector: "app-collection-loader",
   templateUrl: "./collection-loader.component.html",

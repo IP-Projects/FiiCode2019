@@ -1,5 +1,5 @@
 import { DomSanitizer } from '@angular/platform-browser';
-import { Injectable, Component, Input, NgModule, defineInjectable } from '@angular/core';
+import { Injectable, NgModule, Component, Input, ViewEncapsulation, defineInjectable } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -46,7 +46,8 @@ YoutubeModuleComponent.decorators = [
       allowfullscreen
       style="height:100%;width:100%;overflow:auto;border: 0px;"
     ></iframe>
-  `
+  `,
+                encapsulation: ViewEncapsulation.Native
             }] }
 ];
 /** @nocollapse */
