@@ -1,7 +1,7 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { PdfModuleModule } from '@multimedia-album-management/extras/pdf-module';
 import { SvgModuleModule } from '@multimedia-album-management/extras/svg-module';
@@ -38,6 +38,7 @@ import { FilterCollectionsPipe } from './shared/pipe/filterCollections.pipe';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     PdfModuleModule,
     SvgModuleModule,

@@ -43,7 +43,7 @@
             { type: i0.Component, args: [{
                         selector: "app-youtube-module",
                         template: "\n    <iframe\n      [src]=\"sanitizer.bypassSecurityTrustResourceUrl(source)\"\n      frameborder=\"0\"\n      allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n      allowfullscreen\n      style=\"height:100%;width:100%;overflow:auto;border: 0px;\"\n    ></iframe>\n  ",
-                        encapsulation: i0.ViewEncapsulation.Native
+                        encapsulation: i0.ViewEncapsulation.None
                     }] }
         ];
         /** @nocollapse */

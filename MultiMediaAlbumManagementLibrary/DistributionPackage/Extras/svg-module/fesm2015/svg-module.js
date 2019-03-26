@@ -43,7 +43,7 @@ SvgModuleComponent.decorators = [
     >
     </iframe>
   `,
-                encapsulation: ViewEncapsulation.Native
+                encapsulation: ViewEncapsulation.None
             }] }
 ];
 /** @nocollapse */

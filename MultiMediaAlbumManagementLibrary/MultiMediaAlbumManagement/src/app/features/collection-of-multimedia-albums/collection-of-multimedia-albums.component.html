@@ -1,4 +1,4 @@
-<div class="w-100 h-100 p-2 box roboto-font">
+<div id="collection-of-multimedia-albums" class="w-100 h-100 p-2 box roboto-font">
   <!--Button Area-->
   <div id="button-area" class="w-100 d-flex-block justify-content-between box">
     <div class="w-resizable-35 d-flex justify-content-between-start">
@@ -10,7 +10,11 @@
       >
         Add Collection
       </button>
-      <button type="button" class="btn btn-{{ bootstrapAccentPrimary }} w-min-140px">
+      <button
+        type="button"
+        class="btn btn-{{ _deleteAccent }} w-min-140px"
+        (click)="toggleDeleteButton()"
+      >
         Delete Collection
       </button>
     </div>
@@ -45,6 +49,9 @@
     <div
       class="{{ 'grid-size-' + gridSize }}"
       *ngFor="let collection of (_collectionData | filterCollections: _searchText)"
+      (click)="accessOrDelete(collection)"
+      data-toggle="modal"
+      [attr.data-target]="_modalDeleteConfirmation"
     >
       <!--Placeholder Area-->
       <div [ngSwitch]="_toggleView" class="w-99 box position-relative">
@@ -67,7 +74,7 @@
       <!--Collection's Name Area-->
       <div
         id="collection-name"
-        class="w-99 d-flex align-items-center justify-content-center text-center box break-word"
+        class="w-99 d-flex align-items-center justify-content-center text-center box break-word text-overflow-ellipsis"
       >
         {{ collection.name }}
       </div>
@@ -93,18 +100,19 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form [formGroup]="_addNewCollectionForm">
           <div class="form-group">
+            <input type="text" class="form-control d-none" formControlName="collectionName" />
             <label for="Name" class="col-form-label">Name:</label>
-            <input type="text" class="form-control" id="Name" />
+            <input type="text" class="form-control" id="Name" formControlName="collectionName" />
             <label class="" for="collectionType">Type</label>
-            <select class="custom-select " id="collectionType">
+            <select class="custom-select" id="collectionType" formControlName="collectionType">
               <option selected disabled>Choose...</option>
               <option value="0">Public</option>
               <option value="1">Private</option>
             </select>
             <label for="Keywords" class="col-form-label">Keywords:</label>
-            <input type="text" class="form-control" id="Keywords" />
+            <input type="text" class="form-control" id="keywords" formControlName="keywords" />
           </div>
         </form>
       </div>
@@ -112,7 +120,14 @@
         <button type="button" class="btn btn-{{ bootstrapAccentSecondary }}" data-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn btn-{{ bootstrapAccentPrimary }}">Save changes</button>
+        <button
+          type="button"
+          class="btn btn-{{ bootstrapAccentPrimary }}"
+          data-dismiss="modal"
+          (click)="addCollection()"
+        >
+          Save changes
+        </button>
       </div>
     </div>
   </div>
@@ -149,7 +164,7 @@
           <!--Collection's Name Area-->
           <div
             id="collection-name"
-            class="w-99 d-flex align-items-center justify-content-center text-center box break-word"
+            class="w-99 d-flex align-items-center justify-content-center text-center box break-word text-overflow-ellipsis"
           >
             {{ collection.name }}
           </div>
@@ -159,7 +174,43 @@
         <button type="button" class="btn btn-{{ bootstrapAccentSecondary }}" data-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn btn-{{ bootstrapAccentPrimary }}">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div
+  class="modal fade"
+  id="deleteConfirmationModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="deleteConfirmation"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="deleteConfirmation">Confirm Delete</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p>Are you sure you want to delete the collection, this procedure is irreversible.</p>
+        <p>Do you want to proceed?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-{{ bootstrapAccentSecondary }}" data-dismiss="modal">
+          Cancel
+        </button>
+        <button
+          class="btn btn-{{ bootstrapAccentPrimary }}"
+          (click)="deleteCollection()"
+          data-dismiss="modal"
+        >
+          Delete
+        </button>
       </div>
     </div>
   </div>

@@ -38,7 +38,7 @@ var PdfModuleComponent = /** @class */ (function () {
         { type: Component, args: [{
                     selector: "app-pdf-module",
                     template: "\n    <iframe\n      [src]=\"sanitizer.bypassSecurityTrustResourceUrl(source)\"\n      style=\"height:100%;width:100%;overflow:auto;border: 0px;\"\n    >\n    </iframe>\n  ",
-                    encapsulation: ViewEncapsulation.Native
+                    encapsulation: ViewEncapsulation.None
                 }] }
     ];
     /** @nocollapse */

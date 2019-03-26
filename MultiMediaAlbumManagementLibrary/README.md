@@ -34,4 +34,5 @@ button-area, collections-area,placeholder2d,placeholder3d,collection-name
 
 api url must fallow the next pattern
 
-url/$mainRoute/$userId/$take/$skip
+"url/$userId/$take/\$skip"
+that means if you want to load data from a local json you just have to omit the variables

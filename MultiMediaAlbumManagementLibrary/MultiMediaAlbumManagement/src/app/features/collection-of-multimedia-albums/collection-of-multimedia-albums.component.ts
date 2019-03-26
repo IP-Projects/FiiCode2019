@@ -1,5 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { take } from 'rxjs/operators';
+import { HttpHeaders } from '@angular/common/http';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { EMPTY } from 'rxjs';
+import { catchError, map, take } from 'rxjs/operators';
 import { ApiService } from 'src/app/shared/api/api.service';
 
 @Component({
@@ -12,28 +15,28 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
    * Specific options will override batch options from json object
    */
   @Input()
-  gridSize: Number; // number of albums displayed on a row
+  gridSize: number; // number of albums displayed on a row
 
   @Input()
-  userId: String;
+  userId: string;
 
   @Input()
-  collectionUrl: String; // api call to retrieve the albums in the collection it can be used for both local and remote resources like a local json or from a server
+  collectionUrl: string; // api call to retrieve the albums in the collection it can be used for both local and remote resources like a local json or from a server
 
   @Input()
-  suggestedCollectionUrl: String; // api call to retrieve the albums in the collection
+  suggestedCollectionUrl: string; // api call to retrieve the albums in the collection
 
   @Input()
-  deleteCollectionUrl: String; // api call to delete the albums in the collection
+  deleteCollectionUrl: string; // api call to delete the albums in the collection
 
   @Input()
-  albumUrl: String; // api call to retrieve the album in the collection
+  addCollectionUrl: string;
 
   @Input()
-  skip: Number; // api call to retrieve the album in the collection
+  skip: number;
 
   @Input()
-  take: Number; // api call to retrieve the album in the collection
+  take: number;
 
   @Input()
   configPath: string;
@@ -41,44 +44,227 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
   // used to redirect to the album
   //placeholders for the images of the album(in 3d mode or image in 2d)
   @Input()
-  bootstrapAccentPrimary: String;
+  bootstrapAccentPrimary: string;
 
   @Input()
-  bootstrapAccentSecondary: String;
+  bootstrapAccentSecondary: string;
 
   _collectionData;
   _suggestedCollectionData;
   _searchText;
   _toggleView;
 
-  _bootstrapAccentPrimary;
-  _bootstrapAccentSecondary;
-
-  constructor(public api: ApiService) {}
+  _mostUsedKeywords;
+  _loadedFirstTime = false;
+  _noMoreData = false;
+  _deleteAccent;
+  _markedForDeletion;
+  _addNewCollectionForm;
+  _modalDeleteConfirmation = "";
+  constructor(public api: ApiService, private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.loadInputOptionsOrDefault();
-    this.api
-      .getData("http://localhost:49773/api/Users/public/00000000-0000-0000-0000-000000000000/10/0")
-      .subscribe((data) => {
-        this._collectionData = data;
-        console.log(data);
-      });
+  }
 
+  getCollections() {
     this.api
       .getData(
-        "http://localhost:49773/api/Users/public/00000000-0000-0000-0000-000000000000/10/0/a,d"
+        this.collectionUrl
+          .replace("/$userId", `/${this.userId}`)
+          .replace("/$take", `/${this.take}`)
+          .replace("/$skip", `/${this.skip}`)
       )
+      .pipe(take(1))
       .subscribe((data) => {
+        if (typeof this._collectionData == "undefined") {
+          this._collectionData = [];
+        }
+        data["collection"].forEach((collection) => {
+          console.log(collection);
+          console.log(collection["placeholder"].length);
+
+          if (collection["placeholder"].length == 0) {
+            collection["placeholder"] = [
+              {
+                data: "../../../assets/newCollection.jpg"
+              }
+            ];
+          }
+        });
+        if (data["collection"].length != 0) {
+          console.log(this._collectionData);
+          this._collectionData = [...this._collectionData, ...data["collection"]];
+          this.skip += this.take;
+          var str = "";
+          this._collectionData.forEach((collection) => {
+            str += "," + collection["keywords"];
+          });
+          this._mostUsedKeywords = this.mostUsedKeywords(str);
+          console.log(typeof this.suggestedCollectionUrl);
+          if (typeof this.suggestedCollectionUrl != "undefined") {
+            console.log(typeof this.suggestedCollectionUrl);
+
+            this.getSuggestedCollections();
+          }
+          this._loadedFirstTime = true;
+        } else {
+          this._noMoreData = true;
+        }
+      });
+  }
+
+  mostUsedKeywords(str) {
+    var wordCounts = {};
+    var words = str.split(",");
+    for (var i = 0; i < words.length; i++) {
+      wordCounts["_" + words[i]] = (wordCounts["_" + words[i]] || 0) + 1;
+    }
+    delete wordCounts["_"];
+    var wordsList = "";
+    wordCounts = JSON.parse(JSON.stringify(wordCounts).replace(/_/g, ""));
+    for (var k in wordCounts) {
+      wordsList += "," + k;
+    }
+    wordsList = wordsList.replace(",", "");
+    console.log(wordsList);
+    return wordsList;
+  }
+
+  getSuggestedCollections() {
+    //for suggestions we skip 0 since we want only the best suggestions
+    this.api
+      .getData(
+        this.suggestedCollectionUrl
+          .replace("/$userId", `/${this.userId}`)
+          .replace("/$take", `/${this.take}`)
+          .replace("/$skip", `/0`) + `/${this._mostUsedKeywords}`
+      )
+      .pipe(take(1))
+      .subscribe((data: Array<{}>) => {
+        data.forEach((collection) => {
+          console.log(collection);
+          console.log(collection["placeholder"].length);
+
+          if (collection["placeholder"].length == 0) {
+            collection["placeholder"] = [
+              {
+                data: "../../../assets/newCollection.jpg"
+              }
+            ];
+          }
+        });
         this._suggestedCollectionData = data;
+      });
+  }
+
+  @HostListener("window:scroll", ["$event"])
+  onWindowScroll() {
+    //In chrome and some browser scroll is given to body tag
+    let pos =
+      (document.documentElement.scrollTop || document.body.scrollTop) +
+      document.documentElement.offsetHeight;
+    let max = document.documentElement.scrollHeight;
+    console.log(pos);
+    console.log(max);
+    // pos/max will give you the distance between scroll bottom and and bottom of screen in percentage.
+    if (
+      pos == max ||
+      Math.ceil(pos) == Math.ceil(max) ||
+      Math.floor(pos) == Math.floor(max) ||
+      Math.floor(pos) == Math.ceil(max) ||
+      Math.ceil(pos) == Math.floor(max)
+    ) {
+      if (this._loadedFirstTime) {
+        this.getCollections();
+      }
+    }
+  }
+
+  loadCollectionsUntilScrollbarAppears() {
+    this.getCollections();
+    let max = document.documentElement.scrollHeight;
+    var interval = setInterval(() => {
+      if (this._loadedFirstTime == true) {
+        if (max < document.documentElement.scrollHeight || this._noMoreData == true) {
+          clearInterval(interval);
+        } else {
+          this.getCollections();
+        }
+      }
+    }, 1000);
+  }
+
+  toggleDeleteButton() {
+    if (this._deleteAccent == this.bootstrapAccentPrimary) {
+      this._deleteAccent = this.bootstrapAccentSecondary;
+      this._modalDeleteConfirmation = "#deleteConfirmationModal";
+    } else {
+      this._deleteAccent = this.bootstrapAccentPrimary;
+      this._modalDeleteConfirmation = "";
+    }
+  }
+
+  accessOrDelete(collection) {
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  here put redirect on click
+    if (this._deleteAccent == this.bootstrapAccentSecondary) {
+      console.log(collection);
+      this._markedForDeletion = collection;
+    }
+  }
+
+  deleteCollection() {
+    this.api
+      .deleteData(
+        this.deleteCollectionUrl.replace("/$collectionId", `/${this._markedForDeletion["id"]}`)
+      )
+      .pipe(take(1))
+      .subscribe((data) => {});
+    this._collectionData = this._collectionData.filter((item) => item != this._markedForDeletion);
+  }
+
+  addCollection() {
+    console.log(this._addNewCollectionForm);
+    let headers = new HttpHeaders();
+    headers.append("Content-Type", "application/json");
+    this.api
+      .postData(this.addCollectionUrl, {
+        Name: `${this._addNewCollectionForm.value.collectionName}`,
+        Type: this._addNewCollectionForm.value.collectionType,
+        Keywords: `${this._addNewCollectionForm.value.keywords}`,
+        UserId: `${this.userId}`
+      })
+      .pipe(take(1))
+      .subscribe((data) => {
         console.log(data);
+        data["placeholder"] = [
+          {
+            data: "../../../assets/newCollection.jpg"
+          }
+        ];
+        this._collectionData = [...this._collectionData, data];
       });
   }
 
   loadInputOptionsOrDefault() {
     this.api
-      .getData(this.configPath)
-      .pipe(take(1))
+      .getData("../../../assets/config.json")
+      .pipe(
+        catchError((err) => {
+          this.loadDefault();
+          if (typeof this.collectionUrl != "undefined") {
+            this.loadCollectionsUntilScrollbarAppears();
+            this.onWindowScroll();
+          }
+
+          return EMPTY;
+        }),
+        take(1),
+        map((data) => {
+          console.log("here");
+          return data;
+        })
+      )
       .subscribe((config) => {
         if (typeof config["userId"] != "undefined" && typeof this.userId == "undefined") {
           this.userId = config["userId"];
@@ -104,8 +290,11 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
         ) {
           this.deleteCollectionUrl = config["deleteCollectionUrl"];
         }
-        if (typeof config["albumUrl"] != "undefined" && typeof this.albumUrl == "undefined") {
-          this.albumUrl = config["albumUrl"];
+        if (
+          typeof config["addCollectionUrl"] != "undefined" &&
+          typeof this.addCollectionUrl == "undefined"
+        ) {
+          this.addCollectionUrl = config["addCollectionUrl"];
         }
         if (typeof config["skip"] != "undefined" && typeof this.skip == "undefined") {
           this.skip = config["skip"];
@@ -126,6 +315,10 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
           this.bootstrapAccentSecondary = config["bootstrapAccentSecondary"];
         }
         this.loadDefault();
+        if (typeof this.collectionUrl != "undefined") {
+          this.loadCollectionsUntilScrollbarAppears();
+          this.onWindowScroll();
+        }
       });
   }
   loadDefault() {
@@ -144,8 +337,8 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
     if (typeof this.deleteCollectionUrl == "undefined") {
       this.deleteCollectionUrl = "";
     }
-    if (typeof this.albumUrl == "undefined") {
-      this.albumUrl = "";
+    if (typeof this.addCollectionUrl == "undefined") {
+      this.addCollectionUrl = "";
     }
     if (typeof this.skip == "undefined") {
       this.skip = 0;
@@ -159,5 +352,11 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
     if (typeof this.bootstrapAccentSecondary == "undefined") {
       this.bootstrapAccentSecondary = "secondary";
     }
+    this._deleteAccent = this.bootstrapAccentPrimary;
+    this._addNewCollectionForm = this.formBuilder.group({
+      collectionName: ["", Validators.required],
+      collectionType: ["", Validators.required],
+      keywords: ["", Validators.required]
+    });
   }
 }
