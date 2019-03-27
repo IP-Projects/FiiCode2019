@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { PdfModuleModule } from '@multimedia-album-management/extras/pdf-module';
 import { SvgModuleModule } from '@multimedia-album-management/extras/svg-module';
 import { YoutubeModuleModule } from '@multimedia-album-management/extras/youtube-module';
+import { SpeechModule } from 'ngx-speech';
 
 import { AppRoutingModule } from './core/app-routing.module';
 import { AppComponent } from './core/app.component';
@@ -40,11 +41,15 @@ import { FilterCollectionsPipe } from './shared/pipe/filterCollections.pipe';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SpeechModule,
     PdfModuleModule,
     SvgModuleModule,
     YoutubeModuleModule
   ],
-  providers: [{ provide: APP_BASE_HREF, useValue: "/" }],
+  providers: [
+    { provide: APP_BASE_HREF, useValue: "/" },
+    { provide: "SPEECH_LANG", useValue: "en-US" }
+  ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
 })

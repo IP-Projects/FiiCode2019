@@ -1,9 +1,11 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { SpeechService } from 'ngx-speech';
 import { EMPTY } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 import { ApiService } from 'src/app/shared/api/api.service';
+import { SnakeService } from 'src/app/shared/easterEgg/snake.service';
 
 @Component({
   selector: "app-collection-of-multimedia-albums",
@@ -61,10 +63,33 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
   _markedForDeletion;
   _addNewCollectionForm;
   _modalDeleteConfirmation = "";
-  constructor(public api: ApiService, private formBuilder: FormBuilder) {}
+  constructor(
+    public api: ApiService,
+    private formBuilder: FormBuilder,
+    public speech: SpeechService,
+    public snake: SnakeService
+  ) {}
 
   ngOnInit() {
+    this._addNewCollectionForm = this.formBuilder.group({
+      collectionName: ["", Validators.required],
+      collectionType: ["", Validators.required],
+      keywords: ["", Validators.required]
+    });
     this.loadInputOptionsOrDefault();
+    this.speech.start();
+    this.speech.message.subscribe((msg) => {
+      console.log(msg);
+      if (msg.message == "delete") {
+        this.toggleDeleteButton();
+      }
+      if (msg.message == "snake") {
+        this.snake.snake();
+      }
+      if (msg.message == "stop") {
+        this.snake.snake();
+      }
+    });
   }
 
   getCollections() {
@@ -194,6 +219,9 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
       }
     }, 1000);
   }
+  toggle() {
+    console.log("aaaa");
+  }
 
   toggleDeleteButton() {
     if (this._deleteAccent == this.bootstrapAccentPrimary) {
@@ -203,6 +231,8 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
       this._deleteAccent = this.bootstrapAccentPrimary;
       this._modalDeleteConfirmation = "";
     }
+    console.log("aaaa");
+    // this.cdRef.detectChanges();
   }
 
   accessOrDelete(collection) {
@@ -353,10 +383,5 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
       this.bootstrapAccentSecondary = "secondary";
     }
     this._deleteAccent = this.bootstrapAccentPrimary;
-    this._addNewCollectionForm = this.formBuilder.group({
-      collectionName: ["", Validators.required],
-      collectionType: ["", Validators.required],
-      keywords: ["", Validators.required]
-    });
   }
 }
