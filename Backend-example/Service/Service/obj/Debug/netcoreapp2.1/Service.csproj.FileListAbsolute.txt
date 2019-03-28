@@ -1,0 +1,42 @@
+E:\Tedy\Service\Service\bin\Debug\netcoreapp2.1\Service.deps.json
+E:\Tedy\Service\Service\bin\Debug\netcoreapp2.1\Service.runtimeconfig.json
+E:\Tedy\Service\Service\bin\Debug\netcoreapp2.1\Service.runtimeconfig.dev.json
+E:\Tedy\Service\Service\bin\Debug\netcoreapp2.1\Service.dll
+E:\Tedy\Service\Service\bin\Debug\netcoreapp2.1\Service.pdb
+E:\Tedy\Service\Service\obj\Debug\netcoreapp2.1\Service.csprojAssemblyReference.cache
+E:\Tedy\Service\Service\obj\Debug\netcoreapp2.1\Service.csproj.CoreCompileInputs.cache
+E:\Tedy\Service\Service\obj\Debug\netcoreapp2.1\Service.RazorAssemblyInfo.cache
+E:\Tedy\Service\Service\obj\Debug\netcoreapp2.1\Service.RazorAssemblyInfo.cs
+E:\Tedy\Service\Service\obj\Debug\netcoreapp2.1\Service.AssemblyInfoInputs.cache
+E:\Tedy\Service\Service\obj\Debug\netcoreapp2.1\Service.AssemblyInfo.cs
+E:\Tedy\Service\Service\obj\Debug\netcoreapp2.1\Service.RazorTargetAssemblyInfo.cache
+E:\Tedy\Service\Service\obj\Debug\netcoreapp2.1\Service.dll
+E:\Tedy\Service\Service\obj\Debug\netcoreapp2.1\Service.pdb
+C:\Users\Tedy\Desktop\New folder\Service\Service\bin\Debug\netcoreapp2.1\Service.deps.json
+C:\Users\Tedy\Desktop\New folder\Service\Service\bin\Debug\netcoreapp2.1\Service.runtimeconfig.json
+C:\Users\Tedy\Desktop\New folder\Service\Service\bin\Debug\netcoreapp2.1\Service.runtimeconfig.dev.json
+C:\Users\Tedy\Desktop\New folder\Service\Service\bin\Debug\netcoreapp2.1\Service.dll
+C:\Users\Tedy\Desktop\New folder\Service\Service\bin\Debug\netcoreapp2.1\Service.pdb
+C:\Users\Tedy\Desktop\New folder\Service\Service\obj\Debug\netcoreapp2.1\Service.csprojAssemblyReference.cache
+C:\Users\Tedy\Desktop\New folder\Service\Service\obj\Debug\netcoreapp2.1\Service.csproj.CoreCompileInputs.cache
+C:\Users\Tedy\Desktop\New folder\Service\Service\obj\Debug\netcoreapp2.1\Service.RazorAssemblyInfo.cache
+C:\Users\Tedy\Desktop\New folder\Service\Service\obj\Debug\netcoreapp2.1\Service.RazorAssemblyInfo.cs
+C:\Users\Tedy\Desktop\New folder\Service\Service\obj\Debug\netcoreapp2.1\Service.AssemblyInfoInputs.cache
+C:\Users\Tedy\Desktop\New folder\Service\Service\obj\Debug\netcoreapp2.1\Service.AssemblyInfo.cs
+C:\Users\Tedy\Desktop\New folder\Service\Service\obj\Debug\netcoreapp2.1\Service.RazorTargetAssemblyInfo.cache
+C:\Users\Tedy\Desktop\New folder\Service\Service\obj\Debug\netcoreapp2.1\Service.dll
+C:\Users\Tedy\Desktop\New folder\Service\Service\obj\Debug\netcoreapp2.1\Service.pdb
+G:\L\study\github\FiiCode2019\Backend-example\Service\Service\bin\Debug\netcoreapp2.1\Service.deps.json
+G:\L\study\github\FiiCode2019\Backend-example\Service\Service\bin\Debug\netcoreapp2.1\Service.runtimeconfig.json
+G:\L\study\github\FiiCode2019\Backend-example\Service\Service\bin\Debug\netcoreapp2.1\Service.runtimeconfig.dev.json
+G:\L\study\github\FiiCode2019\Backend-example\Service\Service\bin\Debug\netcoreapp2.1\Service.dll
+G:\L\study\github\FiiCode2019\Backend-example\Service\Service\bin\Debug\netcoreapp2.1\Service.pdb
+G:\L\study\github\FiiCode2019\Backend-example\Service\Service\obj\Debug\netcoreapp2.1\Service.csprojAssemblyReference.cache
+G:\L\study\github\FiiCode2019\Backend-example\Service\Service\obj\Debug\netcoreapp2.1\Service.csproj.CoreCompileInputs.cache
+G:\L\study\github\FiiCode2019\Backend-example\Service\Service\obj\Debug\netcoreapp2.1\Service.RazorAssemblyInfo.cache
+G:\L\study\github\FiiCode2019\Backend-example\Service\Service\obj\Debug\netcoreapp2.1\Service.RazorAssemblyInfo.cs
+G:\L\study\github\FiiCode2019\Backend-example\Service\Service\obj\Debug\netcoreapp2.1\Service.AssemblyInfoInputs.cache
+G:\L\study\github\FiiCode2019\Backend-example\Service\Service\obj\Debug\netcoreapp2.1\Service.AssemblyInfo.cs
+G:\L\study\github\FiiCode2019\Backend-example\Service\Service\obj\Debug\netcoreapp2.1\Service.RazorTargetAssemblyInfo.cache
+G:\L\study\github\FiiCode2019\Backend-example\Service\Service\obj\Debug\netcoreapp2.1\Service.dll
+G:\L\study\github\FiiCode2019\Backend-example\Service\Service\obj\Debug\netcoreapp2.1\Service.pdb
