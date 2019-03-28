@@ -11,8 +11,8 @@ export class GenerateThumbnailAndEntityService {
   constructor() {}
 
   readUploadedFilesAndGetPlaceholders(e, collectionId) {
-    const width = 240;
-    const height = 240;
+    const width = 250;
+    const height = 150;
     var arrayOfEntityAndPlaceholder = [];
     e.target.file.forEach((file) => {
       const fileName = file.name;
@@ -27,17 +27,41 @@ export class GenerateThumbnailAndEntityService {
         }
         if (readerMetaData.includes("image") && !readerMetaData.includes("svg")) {
           arrayOfEntityAndPlaceholder.push(
-            this.imageData(event.target["result"], width, height, "image", fileName, 0, collectionId)
+            this.imageData(
+              event.target["result"],
+              width,
+              height,
+              "image",
+              fileName,
+              0,
+              collectionId
+            )
           );
         }
         if (readerMetaData.includes("audio")) {
           arrayOfEntityAndPlaceholder.push(
-            this.imageData(event.target["result"], width, height, "audio", fileName, 0, collectionId)
+            this.imageData(
+              event.target["result"],
+              width,
+              height,
+              "audio",
+              fileName,
+              0,
+              collectionId
+            )
           );
         }
         if (readerMetaData.includes("video")) {
           arrayOfEntityAndPlaceholder.push(
-            this.imageData(event.target["result"], width, height, "video", fileName, 0, collectionId)
+            this.imageData(
+              event.target["result"],
+              width,
+              height,
+              "video",
+              fileName,
+              0,
+              collectionId
+            )
           );
         }
         if (readerMetaData.includes("pdf")) {
@@ -52,8 +76,8 @@ export class GenerateThumbnailAndEntityService {
   }
 
   getPlaceholderFromUrl(url, fileName, collectionId) {
-    const width = 240;
-    const height = 240;
+    const width = 250;
+    const height = 150;
     var readerMetaData = url.split(".")[-1];
     if (readerMetaData.includes("svg")) {
       return this.imageData(url, width, height, "svg", fileName, 1, collectionId);

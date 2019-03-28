@@ -1,10 +1,10 @@
 import { HttpHeaders } from '@angular/common/http';
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SpeechService } from 'ngx-speech';
-import { EMPTY } from 'rxjs';
-import { catchError, map, take } from 'rxjs/operators';
+import { EMPTY, Subject } from 'rxjs';
+import { catchError, map, take, takeUntil } from 'rxjs/operators';
 import { ApiService } from 'src/app/shared/api/api.service';
 import { SnakeService } from 'src/app/shared/easterEgg/snake.service';
 import { FloatingMicrophoneService } from 'src/app/shared/services/floating-microphone.service';
@@ -14,7 +14,7 @@ import { FloatingMicrophoneService } from 'src/app/shared/services/floating-micr
   templateUrl: "./collection-of-multimedia-albums.component.html",
   styleUrls: ["./collection-of-multimedia-albums.component.scss"]
 })
-export class CollectionOfMultimediaAlbumsComponent implements OnInit {
+export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy {
   /**
    * Specific options will override batch options from json object
    */
@@ -84,6 +84,8 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
   _addNewCollectionForm;
   _modalDeleteConfirmation = "";
   _scrollAmount;
+
+  private _destroyed = new Subject<void>();
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
@@ -104,13 +106,19 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
     this.floatingMicrophone.makeFloatingMicrophone(this.speech);
   }
 
+  ngOnDestroy(): void {
+    this._destroyed.next();
+    this._destroyed.complete();
+  }
+
   speechActions() {
     this.speech.message
       .pipe(
         catchError((err) => {
           this.toggleMic();
           return EMPTY;
-        })
+        }),
+        takeUntil(this._destroyed)
       )
       .subscribe((msg) => {
         console.log(msg);
@@ -350,7 +358,6 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
               this.loadCollectionsUntilScrollbarAppears();
               this.onWindowScroll();
             }
-
             return EMPTY;
           }),
           take(1),
@@ -363,6 +370,7 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
           if (typeof config["userId"] != "undefined" && typeof this.userId == "undefined") {
             this.userId = config["userId"];
           }
+
           if (typeof config["gridSize"] != "undefined" && typeof this.gridSize == "undefined") {
             this.gridSize = config["gridSize"];
           }

@@ -1,0 +1,23 @@
+<!-- Modal for displaying multimedia files -->
+<div
+  id="{{ type + 'Modal' }}"
+  class="modalEntity box"
+  (swipeleft)="plusSlides(-1)"
+  (swiperight)="plusSlides(1)"
+>
+  <span class="close cursor " (click)="closeEntityModal()">&times;</span>
+  <div class="modalEntity-content box">
+    <div
+      class="{{ 'my' + type + 'Slides' + ' w-100 h-100' }}"
+      *ngFor="let entity of data; let i = index"
+    >
+      <app-album-loader
+        *ngIf="slideIndex == i + 1"
+        sourceUrl="{{ entityUrl }}"
+        entityId="{{ entity.id }}"
+      ></app-album-loader>
+    </div>
+    <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
+    <a class="next" (click)="plusSlides(1)">&#10095;</a>
+  </div>
+</div>

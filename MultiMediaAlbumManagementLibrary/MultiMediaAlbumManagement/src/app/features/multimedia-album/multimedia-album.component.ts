@@ -1,8 +1,8 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpeechService } from 'ngx-speech';
-import { EMPTY } from 'rxjs';
-import { catchError, take } from 'rxjs/operators';
+import { EMPTY, Subject } from 'rxjs';
+import { catchError, take, takeUntil } from 'rxjs/operators';
 import { ApiService } from 'src/app/shared/api/api.service';
 import { SnakeService } from 'src/app/shared/easterEgg/snake.service';
 import { FloatingMicrophoneService } from 'src/app/shared/services/floating-microphone.service';
@@ -12,7 +12,7 @@ import { FloatingMicrophoneService } from 'src/app/shared/services/floating-micr
   templateUrl: "./multimedia-album.component.html",
   styleUrls: ["./multimedia-album.component.scss"]
 })
-export class MultimediaAlbumComponent implements OnInit {
+export class MultimediaAlbumComponent implements OnInit, OnDestroy {
   collectionId;
   gridSize;
   gridSizeSuggestions;
@@ -37,6 +37,8 @@ export class MultimediaAlbumComponent implements OnInit {
   _scrollAmount;
   _suggestedEntities;
   _loadedEntity;
+
+  private _destroyed = new Subject<void>();
   constructor(
     public api: ApiService,
     public speech: SpeechService,
@@ -55,6 +57,11 @@ export class MultimediaAlbumComponent implements OnInit {
     this.floatingMicrophone.makeFloatingMicrophone(this.speech);
   }
 
+  ngOnDestroy(): void {
+    this._destroyed.next();
+    this._destroyed.complete();
+  }
+
   //to modify actions
   speechActions() {
     this.speech.message
@@ -62,7 +69,8 @@ export class MultimediaAlbumComponent implements OnInit {
         catchError((err) => {
           this.toggleMic();
           return EMPTY;
-        })
+        }),
+        takeUntil(this._destroyed)
       )
       .subscribe((msg) => {
         console.log(msg);
@@ -202,83 +210,33 @@ export class MultimediaAlbumComponent implements OnInit {
     }
   }
 
+  _showEntityModal = 0;
+  _slideIndex = 1;
+
   accessOrDelete(placeholder, i) {
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  here put redirect on click
     if (this._deleteAccent == this.bootstrapAccentSecondary) {
-      console.log(placeholder);
       this._markedForDeletion = placeholder;
     } else {
-      this.openEntityModal();
-      this.currentSlide(i + 1);
+      this._showEntityModal = 1;
+      this._slideIndex = i;
     }
   }
-
-  openEntityModal() {
-    document.getElementById("entityModal").style.display = "block";
-  }
-  closeEntityModal() {
-    document.getElementById("entityModal").style.display = "none";
-  }
-  slideIndex = 1;
-  plusSlides(n) {
-    this.showSlides((this.slideIndex += n));
+  noEntityModal(event) {
+    console.log(event);
+    this._showEntityModal = event;
   }
 
-  currentSlide(n) {
-    this.showSlides((this.slideIndex = n));
-  }
-
-  showSlides(n) {
-    var i;
-    var slides = document.getElementsByClassName("mySlides");
-    if (n > slides.length) {
-      this.slideIndex = 1;
-    }
-    if (n < 1) {
-      this.slideIndex = slides.length;
-    }
-    for (i = 0; i < slides.length; i++) {
-      slides[i]["style"].display = "none";
-    }
-
-    slides[this.slideIndex - 1]["style"].display = "block";
-  }
+  _showSuggestedEntityModal = 0;
+  _suggestedSlideIndex = 1;
 
   accessSuggested(i) {
-    this.openSuggestedEntityModal();
-    this.currentSuggestedSlide(i + 1);
+    this._showSuggestedEntityModal = 1;
+    this._suggestedSlideIndex = i;
   }
 
-  suggestedSlideIndex = 1;
-  openSuggestedEntityModal() {
-    document.getElementById("suggestedEntityModal").style.display = "block";
-  }
-  closeSuggestedEntityModal() {
-    document.getElementById("suggestedEntityModal").style.display = "none";
-  }
-
-  plusSuggestedSlides(n) {
-    this.showSuggestedSlides((this.suggestedSlideIndex += n));
-  }
-
-  currentSuggestedSlide(n) {
-    this.showSuggestedSlides((this.suggestedSlideIndex = n));
-  }
-
-  showSuggestedSlides(n) {
-    var i;
-    var slides = document.getElementsByClassName("mySuggestedSlides");
-    if (n > slides.length) {
-      this.suggestedSlideIndex = 1;
-    }
-    if (n < 1) {
-      this.suggestedSlideIndex = slides.length;
-    }
-    for (i = 0; i < slides.length; i++) {
-      slides[i]["style"].display = "none";
-    }
-    console.log(this.suggestedSlideIndex - 1);
-    slides[this.suggestedSlideIndex - 1]["style"].display = "block";
+  noSuggestedEntityModal(event) {
+    console.log(event);
+    this._showSuggestedEntityModal = event;
   }
 
   deleteEntity() {
@@ -301,6 +259,10 @@ export class MultimediaAlbumComponent implements OnInit {
         }
       }
     }, 1000);
+  }
+
+  loadMore(event) {
+    this.getAlbum();
   }
 
   toggleDeleteButton() {

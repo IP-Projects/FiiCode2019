@@ -133,7 +133,7 @@
       <div class="modal-header">
         <h5 class="modal-title" id="seeSuggestions">Suggestions</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          <span aria-hidden="false">&times;</span>
         </button>
       </div>
       <div class="modal-body d-flex-block flex-wrap box ">
@@ -202,42 +202,31 @@
     </div>
   </div>
 </div>
+
 <!-- Microphone Button -->
 <div id="floatingMicrophone" class="notRecording">
   <img class="w-50" src="../../../assets/microphoneIcon.png" />
 </div>
 
 <!-- Modal for displaying multimedia files -->
-<div id="entityModal" class="modalEntity">
-  <span class="close cursor" (click)="closeEntityModal()">&times;</span>
-  <div class="modalEntity-content">
-    <div
-      class="mySlides"
-      *ngFor="let entity of (_albumData | filterAlbum: _searchText); let i = index"
-    >
-      <app-album-loader
-        *ngIf="slideIndex == i + 1"
-        sourceUrl="{{ getEntityUrl }}"
-        entityId="{{ entity.id }}"
-      ></app-album-loader>
-    </div>
-    <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
-    <a class="next" (click)="plusSlides(1)">&#10095;</a>
-  </div>
-</div>
+<app-lightbox
+  (noShow)="noEntityModal($event)"
+  (loadMore)="loadMore($event)"
+  [show]="_showEntityModal"
+  [data]="_albumData | filterAlbum: _searchText"
+  [entityUrl]="getEntityUrl"
+  type="entity"
+  [index]="_slideIndex"
+  [noMoreData]="_noMoreData"
+></app-lightbox>
 
 <!-- Modal for displaying suggested multimedia files -->
-<div id="suggestedEntityModal" class="modalEntity">
-  <span class="close cursor" (click)="closeSuggestedEntityModal()">&times;</span>
-  <div class="modalEntity-content">
-    <div class="mySuggestedSlides" *ngFor="let entity of _suggestedEntities; let i = index">
-      <app-album-loader
-        *ngIf="suggestedSlideIndex == i + 1"
-        sourceUrl="{{ getEntityUrl }}"
-        entityId="{{ entity.id }}"
-      ></app-album-loader>
-    </div>
-    <a class="prev" (click)="plusSuggestedSlides(-1)">&#10094;</a>
-    <a class="next" (click)="plusSuggestedSlides(1)">&#10095;</a>
-  </div>
-</div>
+<app-lightbox
+  (noShow)="noSuggestedEntityModal($event)"
+  [show]="_showSuggestedEntityModal"
+  [data]="_suggestedEntities"
+  [entityUrl]="getEntityUrl"
+  type="suggestedEntity"
+  [index]="_suggestedSlideIndex"
+  noMoreData="1"
+></app-lightbox>

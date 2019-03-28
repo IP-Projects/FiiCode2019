@@ -21,6 +21,7 @@ import { StandAloneComponent } from './features/multimedia-album/stand-alone/sta
 import { AudioModuleComponent } from './shared/modularComponents/audio-module/audio-module.component';
 import { ImageModuleComponent } from './shared/modularComponents/image-module/image-module.component';
 import { VideoModuleComponent } from './shared/modularComponents/video-module/video-module.component';
+import { LightboxComponent } from './features/lightbox/lightbox.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { VideoModuleComponent } from './shared/modularComponents/video-module/vi
     AudioModuleComponent,
     FilterCollectionsPipe,
     FilterAlbumPipe,
-    StandAloneComponent
+    StandAloneComponent,
+    LightboxComponent
   ],
   imports: [
     BrowserModule,

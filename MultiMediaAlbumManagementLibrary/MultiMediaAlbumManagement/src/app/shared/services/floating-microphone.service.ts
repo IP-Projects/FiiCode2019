@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as Hammer from 'hammerjs';
 
 @Injectable({
   providedIn: "root"
@@ -20,6 +21,7 @@ export class FloatingMicrophoneService {
     if (elem) {
       elem.onmousedown = dragMouseDown;
     }
+    this.touchInputsListeners();
 
     function toggleMic() {
       if (elem.classList.contains("notRecording")) {
@@ -67,6 +69,33 @@ export class FloatingMicrophoneService {
 
       if (moveFlag == false) {
         toggleMic();
+      }
+    }
+  }
+
+  touchInputsListeners() {
+    var elem = document.getElementById("floatingMicrophone");
+
+    var mc = new Hammer(elem);
+    mc.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }));
+    mc.on("pan", handleDrag);
+
+    // drag event
+    var lastPosX = 0;
+    var lastPosY = 0;
+    var isDragging = false;
+    function handleDrag(ev) {
+      if (!isDragging) {
+        isDragging = true;
+        lastPosX = elem.offsetLeft;
+        lastPosY = elem.offsetTop;
+      }
+      var posX = ev.deltaX + lastPosX;
+      var posY = ev.deltaY + lastPosY;
+      elem.style.left = posX + "px";
+      elem.style.top = posY + "px";
+      if (ev.isFinal) {
+        isDragging = false;
       }
     }
   }
