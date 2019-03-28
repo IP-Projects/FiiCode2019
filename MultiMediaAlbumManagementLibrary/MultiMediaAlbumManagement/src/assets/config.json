@@ -1,13 +1,18 @@
 {
-  "grid-size": 3,
+  "grid-size": 7,
   "bootstrapAccentPrimary": "danger",
   "bootstrapAccentSecondary": "dark",
 
-  "collectionUrl": "http://localhost:49773/api/Users/$userId/$take/$skip",
   "userId": "a5c924d1-9af1-4f6b-a35c-51d951dddf32",
   "take": 10,
   "skip": 0,
+  "collectionUrl": "http://localhost:49773/api/Users/$userId/$take/$skip",
   "suggestedCollectionUrl": "http://localhost:49773/api/Users/public/$userId/$take/$skip",
   "deleteCollectionUrl": "http://localhost:49773/api/Collections/$collectionId",
-  "addCollectionUrl": "http://localhost:49773/api/Collections"
+  "addCollectionUrl": "http://localhost:49773/api/Collections",
+  "albumUrl": "http://localhost:49773/api/Collections/$collectionId/$take/$skip",
+  "suggestedEntityUrl": "http://localhost:49773/api/Collections/$collectionId/$take/$skip",
+  "deleteEntityUrl": "http://localhost:49773/api/Placeholders/$entityId",
+  "addEntityUrl": "http://localhost:49773/api/Placeholders",
+  "getEntityUrl": "http://localhost:49773/api/Placeholders/$entityId"
 }

@@ -1,10 +1,24 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import {
+  CollectionOfMultimediaAlbumsComponent,
+} from '../features/collection-of-multimedia-albums/collection-of-multimedia-albums.component';
+import { MultimediaAlbumComponent } from './../features/multimedia-album/multimedia-album.component';
+
+const routes: Routes = [
+  {
+    path: "",
+    component: CollectionOfMultimediaAlbumsComponent
+  },
+  {
+    path: ":id",
+    component: MultimediaAlbumComponent
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

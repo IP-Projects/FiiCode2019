@@ -1,11 +1,13 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SpeechService } from 'ngx-speech';
 import { EMPTY } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 import { ApiService } from 'src/app/shared/api/api.service';
 import { SnakeService } from 'src/app/shared/easterEgg/snake.service';
+import { FloatingMicrophoneService } from 'src/app/shared/services/floating-microphone.service';
 
 @Component({
   selector: "app-collection-of-multimedia-albums",
@@ -18,6 +20,9 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
    */
   @Input()
   gridSize: number; // number of albums displayed on a row
+
+  @Input()
+  gridSizeSuggestions: number; // number of albums displayed on a row
 
   @Input()
   userId: string;
@@ -39,6 +44,21 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
 
   @Input()
   take: number;
+
+  @Input()
+  albumUrl: string; // api call to retrieve the albums in the Album it can be used for both local and remote resources like a local json or from a server
+
+  @Input()
+  suggestedEntityUrl: string; // api call to retrieve the Entities in the Entity
+
+  @Input()
+  deleteEntityUrl: string; // api call to delete the Entities in the Entity
+
+  @Input()
+  addEntityUrl: string;
+
+  @Input()
+  getEntityUrl: string;
 
   @Input()
   configPath: string;
@@ -63,11 +83,14 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
   _markedForDeletion;
   _addNewCollectionForm;
   _modalDeleteConfirmation = "";
+  _scrollAmount;
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
     public speech: SpeechService,
-    public snake: SnakeService
+    public snake: SnakeService,
+    public router: Router,
+    private floatingMicrophone: FloatingMicrophoneService
   ) {}
 
   ngOnInit() {
@@ -77,19 +100,51 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
       keywords: ["", Validators.required]
     });
     this.loadInputOptionsOrDefault();
-    this.speech.start();
-    this.speech.message.subscribe((msg) => {
-      console.log(msg);
-      if (msg.message == "delete") {
-        this.toggleDeleteButton();
-      }
-      if (msg.message == "snake") {
-        this.snake.snake();
-      }
-      if (msg.message == "stop") {
-        this.snake.snake();
-      }
-    });
+    this.speechActions();
+    this.floatingMicrophone.makeFloatingMicrophone(this.speech);
+  }
+
+  speechActions() {
+    this.speech.message
+      .pipe(
+        catchError((err) => {
+          this.toggleMic();
+          return EMPTY;
+        })
+      )
+      .subscribe((msg) => {
+        console.log(msg);
+        if (msg.message == "delete") {
+          document.getElementById("deleteCollectionButton").click();
+        }
+        if (msg.message == "add") {
+          document.getElementById("addCollectionButton").click();
+        }
+        if (
+          msg.message == "suggestions" ||
+          msg.message == "tip" ||
+          msg.message == "recommendations"
+        ) {
+          document.getElementById("suggestionsCollectionButton").click();
+        }
+        if (msg.message == "snake") {
+          this.snake.snake();
+        }
+        this.toggleMic();
+      });
+  }
+
+  toggleMic() {
+    var elem = document.getElementById("floatingMicrophone");
+    if (elem.classList.contains("notRecording")) {
+      elem.classList.remove("notRecording");
+      elem.classList.add("recording");
+      this.speech.start();
+    } else {
+      elem.classList.remove("recording");
+      elem.classList.add("notRecording");
+      this.speech.stop();
+    }
   }
 
   getCollections() {
@@ -192,6 +247,15 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
     let max = document.documentElement.scrollHeight;
     console.log(pos);
     console.log(max);
+    if (typeof this._scrollAmount == "undefined") {
+      this._scrollAmount = pos;
+    } else {
+      // move the floating microphone at the same time with the screen
+      var elem = document.getElementById("floatingMicrophone");
+      elem.style.top = parseFloat(elem.style.top) + (pos - this._scrollAmount) + "px";
+      this._scrollAmount = pos;
+    }
+
     // pos/max will give you the distance between scroll bottom and and bottom of screen in percentage.
     if (
       pos == max ||
@@ -219,9 +283,6 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
       }
     }, 1000);
   }
-  toggle() {
-    console.log("aaaa");
-  }
 
   toggleDeleteButton() {
     if (this._deleteAccent == this.bootstrapAccentPrimary) {
@@ -231,8 +292,6 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
       this._deleteAccent = this.bootstrapAccentPrimary;
       this._modalDeleteConfirmation = "";
     }
-    console.log("aaaa");
-    // this.cdRef.detectChanges();
   }
 
   accessOrDelete(collection) {
@@ -240,6 +299,9 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
     if (this._deleteAccent == this.bootstrapAccentSecondary) {
       console.log(collection);
       this._markedForDeletion = collection;
+    } else {
+      console.log(collection);
+      this.router.navigate([`/${collection.id}`]);
     }
   }
 
@@ -277,86 +339,132 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
   }
 
   loadInputOptionsOrDefault() {
-    this.api
-      .getData("../../../assets/config.json")
-      .pipe(
-        catchError((err) => {
+    this.configPath = "../../../assets/config.json";
+    if (typeof this.configPath != "undefined") {
+      this.api
+        .getData(this.configPath)
+        .pipe(
+          catchError((err) => {
+            this.loadDefault();
+            if (typeof this.collectionUrl != "undefined") {
+              this.loadCollectionsUntilScrollbarAppears();
+              this.onWindowScroll();
+            }
+
+            return EMPTY;
+          }),
+          take(1),
+          map((data) => {
+            console.log("here");
+            return data;
+          })
+        )
+        .subscribe((config) => {
+          if (typeof config["userId"] != "undefined" && typeof this.userId == "undefined") {
+            this.userId = config["userId"];
+          }
+          if (typeof config["gridSize"] != "undefined" && typeof this.gridSize == "undefined") {
+            this.gridSize = config["gridSize"];
+          }
+          if (
+            typeof config["gridSizeSuggestions"] != "undefined" &&
+            typeof this.gridSizeSuggestions == "undefined"
+          ) {
+            this.gridSizeSuggestions = config["gridSizeSuggestions"];
+          }
+          if (
+            typeof config["collectionUrl"] != "undefined" &&
+            typeof this.collectionUrl == "undefined"
+          ) {
+            this.collectionUrl = config["collectionUrl"];
+          }
+          if (
+            typeof config["suggestedCollectionUrl"] != "undefined" &&
+            typeof this.suggestedCollectionUrl == "undefined"
+          ) {
+            this.suggestedCollectionUrl = config["suggestedCollectionUrl"];
+          }
+          if (
+            typeof config["deleteCollectionUrl"] != "undefined" &&
+            typeof this.deleteCollectionUrl == "undefined"
+          ) {
+            this.deleteCollectionUrl = config["deleteCollectionUrl"];
+          }
+          if (
+            typeof config["addCollectionUrl"] != "undefined" &&
+            typeof this.addCollectionUrl == "undefined"
+          ) {
+            this.addCollectionUrl = config["addCollectionUrl"];
+          }
+          if (typeof config["skip"] != "undefined" && typeof this.skip == "undefined") {
+            this.skip = config["skip"];
+          }
+          if (typeof config["take"] != "undefined" && typeof this.take == "undefined") {
+            this.take = config["take"];
+          }
+          if (
+            typeof config["bootstrapAccentPrimary"] != "undefined" &&
+            typeof this.bootstrapAccentPrimary == "undefined"
+          ) {
+            this.bootstrapAccentPrimary = config["bootstrapAccentPrimary"];
+          }
+          if (
+            typeof config["bootstrapAccentSecondary"] != "undefined" &&
+            typeof this.bootstrapAccentSecondary == "undefined"
+          ) {
+            this.bootstrapAccentSecondary = config["bootstrapAccentSecondary"];
+          }
+          if (typeof config["albumUrl"] != "undefined" && typeof this.albumUrl == "undefined") {
+            this.albumUrl = config["albumUrl"];
+          }
+          if (
+            typeof config["suggestedEntityUrl"] != "undefined" &&
+            typeof this.suggestedEntityUrl == "undefined"
+          ) {
+            this.suggestedEntityUrl = config["suggestedEntityUrl"];
+          }
+          if (
+            typeof config["deleteEntityUrl"] != "undefined" &&
+            typeof this.deleteEntityUrl == "undefined"
+          ) {
+            this.deleteEntityUrl = config["deleteEntityUrl"];
+          }
+          if (
+            typeof config["addEntityUrl"] != "undefined" &&
+            typeof this.addEntityUrl == "undefined"
+          ) {
+            this.addEntityUrl = config["addEntityUrl"];
+          }
+          if (
+            typeof config["getEntityUrl"] != "undefined" &&
+            typeof this.getEntityUrl == "undefined"
+          ) {
+            this.getEntityUrl = config["getEntityUrl"];
+          }
           this.loadDefault();
           if (typeof this.collectionUrl != "undefined") {
             this.loadCollectionsUntilScrollbarAppears();
             this.onWindowScroll();
           }
-
-          return EMPTY;
-        }),
-        take(1),
-        map((data) => {
-          console.log("here");
-          return data;
-        })
-      )
-      .subscribe((config) => {
-        if (typeof config["userId"] != "undefined" && typeof this.userId == "undefined") {
-          this.userId = config["userId"];
-        }
-        if (typeof config["gridSize"] != "undefined" && typeof this.gridSize == "undefined") {
-          this.gridSize = config["gridSize"];
-        }
-        if (
-          typeof config["collectionUrl"] != "undefined" &&
-          typeof this.collectionUrl == "undefined"
-        ) {
-          this.collectionUrl = config["collectionUrl"];
-        }
-        if (
-          typeof config["suggestedCollectionUrl"] != "undefined" &&
-          typeof this.suggestedCollectionUrl == "undefined"
-        ) {
-          this.suggestedCollectionUrl = config["suggestedCollectionUrl"];
-        }
-        if (
-          typeof config["deleteCollectionUrl"] != "undefined" &&
-          typeof this.deleteCollectionUrl == "undefined"
-        ) {
-          this.deleteCollectionUrl = config["deleteCollectionUrl"];
-        }
-        if (
-          typeof config["addCollectionUrl"] != "undefined" &&
-          typeof this.addCollectionUrl == "undefined"
-        ) {
-          this.addCollectionUrl = config["addCollectionUrl"];
-        }
-        if (typeof config["skip"] != "undefined" && typeof this.skip == "undefined") {
-          this.skip = config["skip"];
-        }
-        if (typeof config["take"] != "undefined" && typeof this.take == "undefined") {
-          this.take = config["take"];
-        }
-        if (
-          typeof config["bootstrapAccentPrimary"] != "undefined" &&
-          typeof this.bootstrapAccentPrimary == "undefined"
-        ) {
-          this.bootstrapAccentPrimary = config["bootstrapAccentPrimary"];
-        }
-        if (
-          typeof config["bootstrapAccentSecondary"] != "undefined" &&
-          typeof this.bootstrapAccentSecondary == "undefined"
-        ) {
-          this.bootstrapAccentSecondary = config["bootstrapAccentSecondary"];
-        }
-        this.loadDefault();
-        if (typeof this.collectionUrl != "undefined") {
-          this.loadCollectionsUntilScrollbarAppears();
-          this.onWindowScroll();
-        }
-      });
+        });
+    } else {
+      this.loadDefault();
+      if (typeof this.collectionUrl != "undefined") {
+        this.loadCollectionsUntilScrollbarAppears();
+        this.onWindowScroll();
+      }
+    }
   }
+
   loadDefault() {
     if (typeof this.userId == "undefined") {
       this.userId = "00000000-0000-0000-0000-000000000000";
     }
     if (typeof this.gridSize == "undefined") {
       this.gridSize = 10;
+    }
+    if (typeof this.gridSizeSuggestions == "undefined") {
+      this.gridSizeSuggestions = 3;
     }
     if (typeof this.collectionUrl == "undefined") {
       this.collectionUrl = "";
@@ -377,11 +485,42 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit {
       this.take = 0;
     }
     if (typeof this.bootstrapAccentPrimary == "undefined") {
-      this.bootstrapAccentPrimary = "dark";
+      this.bootstrapAccentPrimary = "danger";
     }
     if (typeof this.bootstrapAccentSecondary == "undefined") {
-      this.bootstrapAccentSecondary = "secondary";
+      this.bootstrapAccentSecondary = "dark";
     }
+    if (typeof this.albumUrl == "undefined") {
+      this.albumUrl = "";
+    }
+    if (typeof this.suggestedEntityUrl == "undefined") {
+      this.suggestedEntityUrl = "";
+    }
+    if (typeof this.deleteEntityUrl == "undefined") {
+      this.deleteEntityUrl = "";
+    }
+    if (typeof this.addEntityUrl == "undefined") {
+      this.addEntityUrl = "";
+    }
+    if (typeof this.getEntityUrl == "undefined") {
+      this.getEntityUrl = "";
+    }
+
+    var albumInputs = {
+      gridSize: this.gridSize,
+      gridSizeSuggestions: this.gridSizeSuggestions,
+      skip: this.skip,
+      take: this.take,
+      bootstrapAccentPrimary: this.bootstrapAccentPrimary,
+      bootstrapAccentSecondary: this.bootstrapAccentSecondary,
+      albumUrl: this.albumUrl,
+      suggestedEntityUrl: this.suggestedEntityUrl,
+      deleteEntityUrl: this.deleteEntityUrl,
+      addEntityUrl: this.addEntityUrl,
+      getEntityUrl: this.getEntityUrl
+    };
+    sessionStorage.setItem("albumInputs", JSON.stringify(albumInputs));
+
     this._deleteAccent = this.bootstrapAccentPrimary;
   }
 }

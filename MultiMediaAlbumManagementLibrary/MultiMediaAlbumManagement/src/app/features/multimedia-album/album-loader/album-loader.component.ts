@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/shared/api/api.service';
 
 @Component({
   selector: "app-album-loader",
@@ -6,8 +7,6 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ["./album-loader.component.scss"]
 })
 export class AlbumLoaderComponent implements OnInit {
-  _albumData;
-
   @Input()
   loadExtraModules;
   @Input()
@@ -19,15 +18,31 @@ export class AlbumLoaderComponent implements OnInit {
   @Input()
   pathToExtraModules: string;
 
-  _collectionData;
-  constructor() {}
+  @Input()
+  sourceUrl;
+  @Input()
+  entityId;
+
+  source;
+  extension;
+
+  constructor(public api: ApiService) {}
 
   ngOnInit() {
     // if (JSON.parse(this.loadExtraModules)) {
     //   this.loadExtraModulesFunction();
     // }
+    this.getEntity(this.sourceUrl.replace("/$entityId", `/${this.entityId}`));
   }
 
+  getEntity(entityUrl) {
+    this.api.getData(entityUrl).subscribe((data: any) => {
+      //if isUrl == true transform to blob
+      console.log(data);
+      this.source = data.data;
+      this.extension = data.extension;
+    });
+  }
   // loadExtraModulesFunction() {
   //   if (!(this.pathToExtraModules == null || typeof (this.pathToExtraModules == undefined))) {
   //     try {

@@ -11,29 +11,29 @@ import { SpeechModule } from 'ngx-speech';
 import { AppRoutingModule } from './core/app-routing.module';
 import { AppComponent } from './core/app.component';
 import {
-  CollectionLoaderComponent,
-} from './features/collection-of-multimedia-albums/collection-loader/collection-loader.component';
-import {
   CollectionOfMultimediaAlbumsComponent,
 } from './features/collection-of-multimedia-albums/collection-of-multimedia-albums.component';
+import { FilterCollectionsPipe } from './features/collection-of-multimedia-albums/pipe/filterCollections.pipe';
 import { AlbumLoaderComponent } from './features/multimedia-album/album-loader/album-loader.component';
 import { MultimediaAlbumComponent } from './features/multimedia-album/multimedia-album.component';
+import { FilterAlbumPipe } from './features/multimedia-album/pipe/filterAlbum.pipe';
+import { StandAloneComponent } from './features/multimedia-album/stand-alone/stand-alone.component';
 import { AudioModuleComponent } from './shared/modularComponents/audio-module/audio-module.component';
 import { ImageModuleComponent } from './shared/modularComponents/image-module/image-module.component';
 import { VideoModuleComponent } from './shared/modularComponents/video-module/video-module.component';
-import { FilterCollectionsPipe } from './shared/pipe/filterCollections.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     MultimediaAlbumComponent,
     CollectionOfMultimediaAlbumsComponent,
-    CollectionLoaderComponent,
     AlbumLoaderComponent,
     ImageModuleComponent,
     VideoModuleComponent,
     AudioModuleComponent,
-    FilterCollectionsPipe
+    FilterCollectionsPipe,
+    FilterAlbumPipe,
+    StandAloneComponent
   ],
   imports: [
     BrowserModule,

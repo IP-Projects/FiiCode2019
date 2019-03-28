@@ -4,6 +4,7 @@
     <div class="w-resizable-35 d-flex justify-content-between-start">
       <button
         type="button"
+        id="addCollectionButton"
         class="btn btn-{{ bootstrapAccentPrimary }} w-min-140px"
         data-toggle="modal"
         data-target="#addCollectionModal"
@@ -12,6 +13,7 @@
       </button>
       <button
         type="button"
+        id="deleteCollectionButton"
         class="btn btn-{{ _deleteAccent }} w-min-140px"
         (click)="toggleDeleteButton()"
       >
@@ -30,6 +32,7 @@
         </div>
         <button
           type="button"
+          id="suggestionsCollectionButton"
           class="btn btn-{{ bootstrapAccentPrimary }} w-80px"
           data-toggle="modal"
           data-target="#seeSuggestionsModal"
@@ -56,7 +59,7 @@
       <!--Placeholder Area-->
       <div [ngSwitch]="_toggleView" class="w-99 box position-relative">
         <div *ngSwitchDefault id="placeholder2d" class="w-99 box position-relative">
-          <img class="w-100 thumbnail" src="{{ collection.placeholder[0].data }}" />
+          <img class="w-100 thumbnail hover-shadow" src="{{ collection.placeholder[0].data }}" />
         </div>
         <div
           *ngSwitchCase="1"
@@ -152,13 +155,16 @@
       </div>
       <div class="modal-body d-flex-block flex-wrap box">
         <div
-          class="{{ 'grid-size-' + gridSize }}"
+          class="{{ 'grid-size-' + gridSizeSuggestions }}"
           *ngFor="let collection of _suggestedCollectionData"
         >
           <!--Placeholder Area-->
           <div class="w-99 box position-relative">
             <div id="placeholder2d" class="w-99 box position-relative">
-              <img class="w-100 thumbnail" src="{{ collection.placeholder[0].data }}" />
+              <img
+                class="w-100 thumbnail hover-shadow"
+                src="{{ collection.placeholder[0].data }}"
+              />
             </div>
           </div>
           <!--Collection's Name Area-->
@@ -214,4 +220,8 @@
       </div>
     </div>
   </div>
+</div>
+<!-- Microphone Button -->
+<div id="floatingMicrophone" class="notRecording">
+  <img class="w-50" src="../../../assets/microphoneIcon.png" />
 </div>
