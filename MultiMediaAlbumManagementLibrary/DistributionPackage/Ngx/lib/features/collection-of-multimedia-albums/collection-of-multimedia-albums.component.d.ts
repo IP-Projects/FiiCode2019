@@ -1,0 +1,68 @@
+import { OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import { SpeechService } from 'ngx-speech';
+import { ApiService } from '../../shared/api/api.service';
+import { SnakeService } from '../../shared/easterEgg/snake.service';
+import { FloatingMicrophoneService } from '../../shared/services/floating-microphone.service';
+export declare class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy {
+    api: ApiService;
+    private formBuilder;
+    speech: SpeechService;
+    snake: SnakeService;
+    router: Router;
+    private floatingMicrophone;
+    /**
+     * Specific options will override batch options from json object
+     */
+    gridSize: number;
+    gridSizeSuggestions: number;
+    userId: string;
+    collectionUrl: string;
+    suggestedCollectionUrl: string;
+    deleteCollectionUrl: string;
+    addCollectionUrl: string;
+    skip: number;
+    take: number;
+    albumUrl: string;
+    suggestedEntityUrl: string;
+    deleteEntityUrl: string;
+    addEntitiesUrl: string;
+    getEntityUrl: string;
+    slideShow: boolean;
+    lockSlideShow: boolean;
+    slideShowTimeBeforeNext: number;
+    configPath: string;
+    bootstrapAccentPrimary: string;
+    bootstrapAccentSecondary: string;
+    _collectionData: any;
+    _suggestedCollectionData: any;
+    _searchText: any;
+    _toggleView: any;
+    _mostUsedKeywords: any;
+    _loadedFirstTime: boolean;
+    _noMoreData: boolean;
+    _deleteAccent: any;
+    _markedForDeletion: any;
+    _addNewCollectionForm: any;
+    _modalDeleteConfirmation: string;
+    _scrollAmount: any;
+    private _destroyed;
+    constructor(api: ApiService, formBuilder: FormBuilder, speech: SpeechService, snake: SnakeService, router: Router, floatingMicrophone: FloatingMicrophoneService);
+    ngOnInit(): void;
+    ngOnDestroy(): void;
+    speechActions(): void;
+    toggleMic(): void;
+    getCollections(): void;
+    mostUsedKeywords(str: any): string;
+    getSuggestedCollections(): void;
+    onWindowScroll(): void;
+    loadCollectionsUntilScrollbarAppears(): void;
+    toggleDeleteButton(): void;
+    accessOrDelete(collection: any): void;
+    accessRecommendedCollection(collection: any): void;
+    deleteCollection(): void;
+    addCollection(): void;
+    loadInputOptionsOrDefault(): void;
+    loadDefault(): void;
+}
