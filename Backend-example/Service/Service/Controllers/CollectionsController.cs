@@ -70,7 +70,7 @@ namespace Service.Controllers
 
             var keywordsArr = keywords.Split(',');
 
-                var placeHolders = _context.Placeholder.Where(r => r.CollectionId != id && keywordsArr.Any(el => r.Keywords.Contains(el))).Skip(skip).Take(take)
+                var placeHolders = _context.Placeholder.Where(r => r.CollectionId != id && keywordsArr.Any(el =>r.Keywords!=null && r.Keywords.Contains(el))).Skip(skip).Take(take)
                 .ToList();
             
 
