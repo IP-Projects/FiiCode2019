@@ -7,6 +7,8 @@ import { ApiService } from 'src/app/shared/api/api.service';
 import { SnakeService } from 'src/app/shared/easterEgg/snake.service';
 import { FloatingMicrophoneService } from 'src/app/shared/services/floating-microphone.service';
 
+import { GenerateThumbnailAndEntityService } from './services/generate-thumbnail-and-entity.service';
+
 @Component({
   selector: "app-multimedia-album",
   templateUrl: "./multimedia-album.component.html",
@@ -21,7 +23,7 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
   albumUrl;
   suggestedEntityUrl;
   deleteEntityUrl;
-  addEntityUrl;
+  addEntitiesUrl;
   getEntityUrl;
   bootstrapAccentPrimary;
   bootstrapAccentSecondary;
@@ -45,7 +47,8 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
     public snake: SnakeService,
     public router: Router,
     private route: ActivatedRoute,
-    private floatingMicrophone: FloatingMicrophoneService
+    private floatingMicrophone: FloatingMicrophoneService,
+    private thumbnail: GenerateThumbnailAndEntityService
   ) {}
 
   ngOnInit() {
@@ -157,6 +160,7 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
       wordsList += "," + k;
     }
     wordsList = wordsList.replace(",", "");
+    wordsList = wordsList.replace(/,null/g, "");
     console.log(wordsList);
     return wordsList;
   }
@@ -216,6 +220,8 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
   accessOrDelete(placeholder, i) {
     if (this._deleteAccent == this.bootstrapAccentSecondary) {
       this._markedForDeletion = placeholder;
+      console.log(this._markedForDeletion);
+      console.log(placeholder);
     } else {
       this._showEntityModal = 1;
       this._slideIndex = i;
@@ -265,6 +271,20 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
     this.getAlbum();
   }
 
+  addNewData(event) {
+    console.log(this._albumData);
+
+    this._albumData = [...this._albumData, ...event];
+    console.log(this._albumData);
+
+    this._upload = false;
+  }
+
+  _upload = false;
+  upload() {
+    this._upload = true;
+  }
+
   toggleDeleteButton() {
     if (this._deleteAccent == this.bootstrapAccentPrimary) {
       this._deleteAccent = this.bootstrapAccentSecondary;
@@ -284,7 +304,7 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
     this.albumUrl = albumInputOptions.albumUrl;
     this.suggestedEntityUrl = albumInputOptions.suggestedEntityUrl;
     this.deleteEntityUrl = albumInputOptions.deleteEntityUrl;
-    this.addEntityUrl = albumInputOptions.addEntityUrl;
+    this.addEntitiesUrl = albumInputOptions.addEntitiesUrl;
     this.getEntityUrl = albumInputOptions.getEntityUrl;
     this.bootstrapAccentPrimary = albumInputOptions.bootstrapAccentPrimary;
     this.bootstrapAccentSecondary = albumInputOptions.bootstrapAccentSecondary;

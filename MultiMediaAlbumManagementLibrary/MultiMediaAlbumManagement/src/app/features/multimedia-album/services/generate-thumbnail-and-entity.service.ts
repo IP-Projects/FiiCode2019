@@ -14,10 +14,12 @@ export class GenerateThumbnailAndEntityService {
     const width = 250;
     const height = 150;
     var arrayOfEntityAndPlaceholder = [];
-    e.target.file.forEach((file) => {
-      const fileName = file.name;
+    console.log(e);
+    Object.keys(e).forEach((file) => {
+      console.log(e[file]);
+      const fileName = e[file].name;
       const reader = new FileReader();
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(e[file]);
       (reader.onload = (event) => {
         var readerMetaData = event.target["result"].split(";")[0];
         if (readerMetaData.includes("image") && readerMetaData.includes("svg")) {
@@ -40,7 +42,7 @@ export class GenerateThumbnailAndEntityService {
         }
         if (readerMetaData.includes("audio")) {
           arrayOfEntityAndPlaceholder.push(
-            this.imageData(
+            this.audioData(
               event.target["result"],
               width,
               height,
@@ -53,7 +55,7 @@ export class GenerateThumbnailAndEntityService {
         }
         if (readerMetaData.includes("video")) {
           arrayOfEntityAndPlaceholder.push(
-            this.imageData(
+            this.videoData(
               event.target["result"],
               width,
               height,
@@ -66,7 +68,7 @@ export class GenerateThumbnailAndEntityService {
         }
         if (readerMetaData.includes("pdf")) {
           arrayOfEntityAndPlaceholder.push(
-            this.imageData(event.target["result"], width, height, "pdf", fileName, 0, collectionId)
+            this.pdfData(event.target["result"], width, height, "pdf", fileName, 0, collectionId)
           );
         }
       }),
@@ -86,13 +88,13 @@ export class GenerateThumbnailAndEntityService {
       return this.imageData(url, width, height, "image", fileName, 1, collectionId);
     }
     if (this.audioFormats.includes(readerMetaData)) {
-      return this.imageData(url, width, height, "audio", fileName, 1, collectionId);
+      return this.audioData(url, width, height, "audio", fileName, 1, collectionId);
     }
     if (this.videoFormats.includes(readerMetaData)) {
-      return this.imageData(url, width, height, "video", fileName, 1, collectionId);
+      return this.videoData(url, width, height, "video", fileName, 1, collectionId);
     }
     if (readerMetaData.includes("pdf")) {
-      return this.imageData(url, width, height, "pdf", fileName, 1, collectionId);
+      return this.pdfData(url, width, height, "pdf", fileName, 1, collectionId);
     }
     if (url.includes("youtube")) {
       return this.youtubeData(url, width, height, "youtube", fileName, 1, collectionId);

@@ -1,9 +1,9 @@
 /* The modalEntity (background) */
 .modalEntity {
   display: none;
+  padding-top: 50px;
   position: fixed;
   z-index: 100000;
-  padding-top: 100px;
   left: 0;
   top: 0;
   width: 100%;
@@ -18,7 +18,7 @@
   background-color: black;
   margin: auto;
   padding: 0;
-  width: 90%;
+  width: 80%;
   height: 100%;
 }
 

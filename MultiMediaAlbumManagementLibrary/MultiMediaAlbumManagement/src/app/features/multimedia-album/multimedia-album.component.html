@@ -86,21 +86,13 @@
         </button>
       </div>
       <div class="modal-body">
-        <!-- <form [formGroup]="_addNewCollectionForm">
-          <div class="form-group">
-            <input type="text" class="form-control d-none" formControlName="collectionName" />
-            <label for="Name" class="col-form-label">Name:</label>
-            <input type="text" class="form-control" id="Name" formControlName="collectionName" />
-            <label class="" for="collectionType">Type</label>
-            <select class="custom-select" id="collectionType" formControlName="collectionType">
-              <option selected disabled>Choose...</option>
-              <option value="0">Public</option>
-              <option value="1">Private</option>
-            </select>
-            <label for="Keywords" class="col-form-label">Keywords:</label>
-            <input type="text" class="form-control" id="keywords" formControlName="keywords" />
-          </div>
-        </form> -->
+        <app-upload
+          class="w-100 h-100"
+          [upload]="_upload"
+          [collectionId]="collectionId"
+          [addEntitiesUrl]="addEntitiesUrl"
+          (newData)="addNewData($event)"
+        ></app-upload>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-{{ bootstrapAccentSecondary }}" data-dismiss="modal">

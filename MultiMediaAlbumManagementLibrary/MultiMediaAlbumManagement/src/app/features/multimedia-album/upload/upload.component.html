@@ -1,0 +1,6 @@
+<div id="uploadModal" class="w-100 h-100 h-min-300px">
+  <div *ngFor="let entity of arrayOfEntityAndPlaceholder; let i = index">
+    <p>{{ entity.name }}</p>
+    <input [(ngModel)]="arrayOfEntityAndPlaceholder[i].keywords" placeholder="item" />
+  </div>
+</div>

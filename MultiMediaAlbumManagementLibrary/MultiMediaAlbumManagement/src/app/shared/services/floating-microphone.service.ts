@@ -21,7 +21,11 @@ export class FloatingMicrophoneService {
     if (elem) {
       elem.onmousedown = dragMouseDown;
     }
-    this.touchInputsListeners();
+    if (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    ) {
+      this.touchInputsListeners();
+    }
 
     function toggleMic() {
       if (elem.classList.contains("notRecording")) {

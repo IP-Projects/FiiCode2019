@@ -1,4 +1,3 @@
-import { HttpHeaders } from '@angular/common/http';
 import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -55,7 +54,7 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
   deleteEntityUrl: string; // api call to delete the Entities in the Entity
 
   @Input()
-  addEntityUrl: string;
+  addEntitiesUrl: string;
 
   @Input()
   getEntityUrl: string;
@@ -325,8 +324,8 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
 
   addCollection() {
     console.log(this._addNewCollectionForm);
-    let headers = new HttpHeaders();
-    headers.append("Content-Type", "application/json");
+    // let headers = new HttpHeaders();
+    // headers.append("Content-Type", "application/json");
     this.api
       .postData(this.addCollectionUrl, {
         Name: `${this._addNewCollectionForm.value.collectionName}`,
@@ -438,10 +437,10 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
             this.deleteEntityUrl = config["deleteEntityUrl"];
           }
           if (
-            typeof config["addEntityUrl"] != "undefined" &&
-            typeof this.addEntityUrl == "undefined"
+            typeof config["addEntitiesUrl"] != "undefined" &&
+            typeof this.addEntitiesUrl == "undefined"
           ) {
-            this.addEntityUrl = config["addEntityUrl"];
+            this.addEntitiesUrl = config["addEntitiesUrl"];
           }
           if (
             typeof config["getEntityUrl"] != "undefined" &&
@@ -507,8 +506,8 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
     if (typeof this.deleteEntityUrl == "undefined") {
       this.deleteEntityUrl = "";
     }
-    if (typeof this.addEntityUrl == "undefined") {
-      this.addEntityUrl = "";
+    if (typeof this.addEntitiesUrl == "undefined") {
+      this.addEntitiesUrl = "";
     }
     if (typeof this.getEntityUrl == "undefined") {
       this.getEntityUrl = "";
@@ -524,7 +523,7 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
       albumUrl: this.albumUrl,
       suggestedEntityUrl: this.suggestedEntityUrl,
       deleteEntityUrl: this.deleteEntityUrl,
-      addEntityUrl: this.addEntityUrl,
+      addEntitiesUrl: this.addEntitiesUrl,
       getEntityUrl: this.getEntityUrl
     };
     sessionStorage.setItem("albumInputs", JSON.stringify(albumInputs));

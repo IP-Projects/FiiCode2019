@@ -1,16 +1,15 @@
 {
   "name": "@multimedia-album-management/extras",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "publish:extras" : "npm publish --access public"
+    "publish:extras": "npm publish --access public"
   },
   "directories": {
     "pdf-module": "./pdf-module",
     "svg-module": "./svg-module",
     "youtube-module": "./youtube-module"
-
   },
   "author": "Rising Edge Team",
   "license": "MIT"

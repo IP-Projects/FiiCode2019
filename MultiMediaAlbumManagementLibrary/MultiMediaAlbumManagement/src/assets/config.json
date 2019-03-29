@@ -13,6 +13,6 @@
   "albumUrl": "http://localhost:49773/api/Collections/$collectionId/$take/$skip",
   "suggestedEntityUrl": "http://localhost:49773/api/Collections/$collectionId/$take/$skip",
   "deleteEntityUrl": "http://localhost:49773/api/Placeholders/$entityId",
-  "addEntityUrl": "http://localhost:49773/api/Placeholders",
+  "addEntitiesUrl": "http://localhost:49773/api/Placeholders",
   "getEntityUrl": "http://localhost:49773/api/Placeholders/$entityId"
 }
