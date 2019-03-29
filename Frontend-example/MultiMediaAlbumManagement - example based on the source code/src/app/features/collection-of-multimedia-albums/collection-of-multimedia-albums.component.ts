@@ -359,6 +359,7 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
   }
 
   loadInputOptionsOrDefault() {
+    this.configPath = "../../../assets/config.json";
     if (typeof this.configPath != "undefined") {
       this.api
         .getData(this.configPath)

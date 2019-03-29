@@ -308,30 +308,26 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
   }
 
   loadInputOptions() {
-    if (typeof sessionStorage.getItem("albumInputs") == "undefined") {
-      var albumInputOptions = JSON.parse(sessionStorage.getItem("albumInputs"));
-      this.gridSize = albumInputOptions.gridSize;
-      this.gridSizeSuggestions = albumInputOptions.gridSizeSuggestions;
-      this.skip = albumInputOptions.skip;
-      this.take = albumInputOptions.take;
-      this.albumUrl = albumInputOptions.albumUrl;
-      this.suggestedEntityUrl = albumInputOptions.suggestedEntityUrl;
-      this.deleteEntityUrl = albumInputOptions.deleteEntityUrl;
-      this.addEntitiesUrl = albumInputOptions.addEntitiesUrl;
-      this.getEntityUrl = albumInputOptions.getEntityUrl;
-      this.lockSlideShow = albumInputOptions.lockSlideShow;
-      this.slideShow = albumInputOptions.slideShow;
-      this.slideShowTimeBeforeNext = albumInputOptions.slideShowTimeBeforeNext;
-      this.bootstrapAccentPrimary = albumInputOptions.bootstrapAccentPrimary;
-      this.bootstrapAccentSecondary = albumInputOptions.bootstrapAccentSecondary;
-      this._deleteAccent = this.bootstrapAccentPrimary;
+    var albumInputOptions = JSON.parse(sessionStorage.getItem("albumInputs"));
+    this.gridSize = albumInputOptions.gridSize;
+    this.gridSizeSuggestions = albumInputOptions.gridSizeSuggestions;
+    this.skip = albumInputOptions.skip;
+    this.take = albumInputOptions.take;
+    this.albumUrl = albumInputOptions.albumUrl;
+    this.suggestedEntityUrl = albumInputOptions.suggestedEntityUrl;
+    this.deleteEntityUrl = albumInputOptions.deleteEntityUrl;
+    this.addEntitiesUrl = albumInputOptions.addEntitiesUrl;
+    this.getEntityUrl = albumInputOptions.getEntityUrl;
+    this.lockSlideShow = albumInputOptions.lockSlideShow;
+    this.slideShow = albumInputOptions.slideShow;
+    this.slideShowTimeBeforeNext = albumInputOptions.slideShowTimeBeforeNext;
+    this.bootstrapAccentPrimary = albumInputOptions.bootstrapAccentPrimary;
+    this.bootstrapAccentSecondary = albumInputOptions.bootstrapAccentSecondary;
+    this._deleteAccent = this.bootstrapAccentPrimary;
 
-      if (typeof this.albumUrl != "undefined") {
-        this.loadEntitiesUntilScrollbarAppears();
-        this.onWindowScroll();
-      }
-    } else {
-      setTimeout(this.loadInputOptions, 2000);
+    if (typeof this.albumUrl != "undefined") {
+      this.loadEntitiesUntilScrollbarAppears();
+      this.onWindowScroll();
     }
   }
 }
