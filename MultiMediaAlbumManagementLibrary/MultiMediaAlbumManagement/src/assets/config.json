@@ -14,5 +14,8 @@
   "suggestedEntityUrl": "http://localhost:49773/api/Collections/$collectionId/$take/$skip",
   "deleteEntityUrl": "http://localhost:49773/api/Placeholders/$entityId",
   "addEntitiesUrl": "http://localhost:49773/api/Placeholders",
-  "getEntityUrl": "http://localhost:49773/api/Placeholders/$entityId"
+  "getEntityUrl": "http://localhost:49773/api/Placeholders/$entityId",
+  "slideShow": false,
+  "lockSlideShow": false,
+  "slideShowTimeBeforeNext": 5000
 }

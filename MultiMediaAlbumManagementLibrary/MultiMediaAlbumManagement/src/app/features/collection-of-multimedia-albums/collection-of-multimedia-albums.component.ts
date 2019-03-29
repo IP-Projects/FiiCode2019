@@ -60,10 +60,13 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
   getEntityUrl: string;
 
   @Input()
-  slideshow: boolean;
+  slideShow: boolean;
 
   @Input()
-  lockSlideshow: boolean;
+  lockSlideShow: boolean;
+
+  @Input()
+  slideShowTimeBeforeNext: number;
 
   @Input()
   configPath: string;
@@ -318,6 +321,10 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
     }
   }
 
+  accessRecommendedCollection(collection) {
+    this.router.navigate([`/${collection.id}`]);
+  }
+
   deleteCollection() {
     this.api
       .deleteData(
@@ -454,14 +461,20 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
           ) {
             this.getEntityUrl = config["getEntityUrl"];
           }
-          if (typeof config["slideshow"] != "undefined" && typeof this.slideshow == "undefined") {
-            this.slideshow = config["slideshow"];
+          if (typeof config["slideShow"] != "undefined" && typeof this.slideShow == "undefined") {
+            this.slideShow = config["slideShow"];
           }
           if (
-            typeof config["lockSlideshow"] != "undefined" &&
-            typeof this.lockSlideshow == "undefined"
+            typeof config["lockSlideShow"] != "undefined" &&
+            typeof this.lockSlideShow == "undefined"
           ) {
-            this.lockSlideshow = config["lockSlideshow"];
+            this.lockSlideShow = config["lockSlideShow"];
+          }
+          if (
+            typeof config["slideShowTimeBeforeNext"] != "undefined" &&
+            typeof this.slideShowTimeBeforeNext == "undefined"
+          ) {
+            this.slideShowTimeBeforeNext = config["slideShowTimeBeforeNext"];
           }
           this.loadDefault();
           if (typeof this.collectionUrl != "undefined") {
@@ -527,11 +540,14 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
     if (typeof this.getEntityUrl == "undefined") {
       this.getEntityUrl = "";
     }
-    if (typeof this.slideshow == "undefined") {
-      this.slideshow = false;
+    if (typeof this.slideShow == "undefined") {
+      this.slideShow = false;
     }
-    if (typeof this.lockSlideshow == "undefined") {
-      this.lockSlideshow = false;
+    if (typeof this.lockSlideShow == "undefined") {
+      this.lockSlideShow = false;
+    }
+    if (typeof this.slideShowTimeBeforeNext == "undefined") {
+      this.slideShowTimeBeforeNext = 5000;
     }
 
     var albumInputs = {
@@ -546,8 +562,9 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
       deleteEntityUrl: this.deleteEntityUrl,
       addEntitiesUrl: this.addEntitiesUrl,
       getEntityUrl: this.getEntityUrl,
-      lockSlideshow: this.lockSlideshow,
-      slideshow: this.slideshow
+      lockSlideShow: this.lockSlideShow,
+      slideShow: this.slideShow,
+      slideShowTimeBeforeNext: this.slideShowTimeBeforeNext
     };
     sessionStorage.setItem("albumInputs", JSON.stringify(albumInputs));
 

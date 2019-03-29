@@ -327,10 +327,13 @@ export class UploadComponent implements OnInit, OnChanges, AfterViewInit {
     };
   }
   pdfData(data, width, height, extension, fileName, isUrl, collectionId, fileSize) {
+    var dataBypass;
     if (isUrl == 1) {
-      data = this.bypassCors + data;
+      dataBypass = this.bypassCors + data;
+    } else {
+      dataBypass = data;
     }
-    pdfjsLib.getDocument(data).then((pdf) => {
+    pdfjsLib.getDocument(dataBypass).then((pdf) => {
       pdf.getPage(1).then((page) => {
         var canvas = document.createElement("canvas");
         var viewport = page.getViewport(1.0);

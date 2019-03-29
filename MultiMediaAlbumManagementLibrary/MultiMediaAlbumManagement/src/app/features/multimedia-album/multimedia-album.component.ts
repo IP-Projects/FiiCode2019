@@ -25,8 +25,9 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
   getEntityUrl;
   bootstrapAccentPrimary;
   bootstrapAccentSecondary;
-  slideshow;
-  lockSlideshow;
+  slideShow;
+  lockSlideShow;
+  slideShowTimeBeforeNext;
 
   _albumData;
   _searchText;
@@ -39,7 +40,10 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
   _scrollAmount;
   _suggestedEntities;
   _loadedEntity;
-
+  _showEntityModal;
+  _slideIndex = 1;
+  _showSuggestedEntityModal = 0;
+  _suggestedSlideIndex = 1;
   private _destroyed = new Subject<void>();
   constructor(
     public api: ApiService,
@@ -57,6 +61,12 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
     this.loadInputOptions();
     this.speechActions();
     this.floatingMicrophone.makeFloatingMicrophone(this.speech);
+    this.lockSlideShow;
+    if (this.slideShow) {
+      this._showEntityModal = 1;
+    } else {
+      this._showEntityModal = 0;
+    }
   }
 
   ngOnDestroy(): void {
@@ -213,9 +223,6 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
     }
   }
 
-  _showEntityModal = 0;
-  _slideIndex = 1;
-
   accessOrDelete(placeholder, i) {
     if (this._deleteAccent == this.bootstrapAccentSecondary) {
       this._markedForDeletion = placeholder;
@@ -230,9 +237,6 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
     console.log(event);
     this._showEntityModal = event;
   }
-
-  _showSuggestedEntityModal = 0;
-  _suggestedSlideIndex = 1;
 
   accessSuggested(i) {
     this._showSuggestedEntityModal = 1;
@@ -314,8 +318,9 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
     this.deleteEntityUrl = albumInputOptions.deleteEntityUrl;
     this.addEntitiesUrl = albumInputOptions.addEntitiesUrl;
     this.getEntityUrl = albumInputOptions.getEntityUrl;
-    this.lockSlideshow = albumInputOptions.lockSlideshow;
-    this.slideshow = albumInputOptions.slideshow;
+    this.lockSlideShow = albumInputOptions.lockSlideShow;
+    this.slideShow = albumInputOptions.slideShow;
+    this.slideShowTimeBeforeNext = albumInputOptions.slideShowTimeBeforeNext;
     this.bootstrapAccentPrimary = albumInputOptions.bootstrapAccentPrimary;
     this.bootstrapAccentSecondary = albumInputOptions.bootstrapAccentSecondary;
     this._deleteAccent = this.bootstrapAccentPrimary;

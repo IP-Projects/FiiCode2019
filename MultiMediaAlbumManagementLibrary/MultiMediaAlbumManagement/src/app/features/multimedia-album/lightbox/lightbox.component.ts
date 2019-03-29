@@ -24,27 +24,63 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnChanges {
   @Input()
   entityUrl;
 
+  @Input()
+  slideShow;
+
+  @Input()
+  lockSlideShow;
+
+  @Input()
+  slideShowTimeBeforeNext: number;
+
   @Output()
   noShow = new EventEmitter();
 
   @Output()
   loadMore = new EventEmitter();
 
-  ready = 0;
   slideIndex;
+  ready = 0;
+  startSlideShow = false;
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (typeof this.slideShow == "string") {
+      this.slideShow = this.slideShow == "true";
+    }
+    if (typeof this.lockSlideShow == "string") {
+      this.lockSlideShow = this.lockSlideShow == "true";
+    }
+  }
 
   ngAfterViewInit(): void {
-    this.ready = 1;
+    setTimeout(() => {
+      this.ready = 1;
+    }, 1000);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.show == 1) {
-      this.slideIndex = this.index;
-      this.openEntityModal();
-      this.currentSlide(this.slideIndex + 1);
+    this.start();
+  }
+
+  start() {
+    if (this.ready == 1) {
+      if (this.show == 1) {
+        this.slideIndex = this.index;
+        this.openEntityModal();
+        this.currentSlide(this.slideIndex + 1);
+        console.log(this.slideShow);
+        if (this.slideShow == true && this.startSlideShow == false) {
+          this.startSlideShow = true;
+          setInterval(() => {
+            this.plusSlides(1);
+            console.log("here");
+          }, this.slideShowTimeBeforeNext);
+        }
+      }
+    } else {
+      setTimeout(this.start, 1000);
     }
   }
 
@@ -52,8 +88,11 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnChanges {
     document.getElementById(`${this.type}Modal`).style.display = "block";
   }
   closeEntityModal() {
-    document.getElementById(`${this.type}Modal`).style.display = "none";
-    this.noShow.emit(0);
+    console.log(typeof this.lockSlideShow);
+    if (this.lockSlideShow == false) {
+      document.getElementById(`${this.type}Modal`).style.display = "none";
+      this.noShow.emit(0);
+    }
   }
   plusSlides(n) {
     this.showSlides((this.slideIndex += n));
@@ -66,7 +105,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnChanges {
   showSlides(n) {
     var i;
     var slides = document.getElementsByClassName(`my${this.type}Slides`);
-    console.log(slides);
+    // console.log(slides);
     if (n > slides.length) {
       if (this.noMoreData) {
         this.slideIndex = 1;

@@ -1,14 +1,14 @@
 <!-- Modal for displaying multimedia files -->
 <div
   id="{{ type + 'Modal' }}"
-  class="modalEntity box roboto-font"
+  class="modalEntity  roboto-font"
   (swipeleft)="plusSlides(-1)"
   (swiperight)="plusSlides(1)"
 >
   <span class="close cursor " (click)="closeEntityModal()">&times;</span>
-  <div class="modalEntity-content box">
+  <div class="modalEntity-content  d-flex justify-content-center align-items-center">
     <div
-      class="{{ 'my' + type + 'Slides' + ' w-100 h-100' }}"
+      class="{{ 'my' + type + 'Slides' + ' wh-100' }}"
       *ngFor="let entity of data; let i = index"
     >
       <app-album-loader
@@ -17,7 +17,7 @@
         entityId="{{ entity.id }}"
       ></app-album-loader>
     </div>
-    <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
-    <a class="next" (click)="plusSlides(1)">&#10095;</a>
   </div>
+  <a class="prev" (click)="plusSlides(-1)">&#10094;</a>
+  <a class="next" (click)="plusSlides(1)">&#10095;</a>
 </div>

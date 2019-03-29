@@ -218,6 +218,9 @@
   type="entity"
   [index]="_slideIndex"
   [noMoreData]="_noMoreData"
+  [lockSlideShow]="lockSlideShow"
+  [slideShow]="slideShow"
+  [slideShowTimeBeforeNext]="slideShowTimeBeforeNext"
 ></app-lightbox>
 
 <!-- Modal for displaying suggested multimedia files -->
@@ -229,4 +232,7 @@
   type="suggestedEntity"
   [index]="_suggestedSlideIndex"
   noMoreData="1"
+  lockSlideShow="false"
+  slideShow="false"
+  slideShowTimeBeforeNext="5000"
 ></app-lightbox>

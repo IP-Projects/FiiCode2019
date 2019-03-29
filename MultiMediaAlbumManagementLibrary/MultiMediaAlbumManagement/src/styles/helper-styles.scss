@@ -100,8 +100,10 @@ $amountOfSizes: 100;
     @include md {
       width: $i#{"%"};
     }
+    // prettier-ignore
     @include lg {
       height: $i#{"%"};
+      min-width: ($i/1.5)#{"%"};
     }
   }
   // .h-resizable-#{$i} {

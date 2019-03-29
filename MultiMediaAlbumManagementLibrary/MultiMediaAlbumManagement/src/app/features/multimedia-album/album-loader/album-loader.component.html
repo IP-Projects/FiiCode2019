@@ -1,20 +1,20 @@
-<div [ngSwitch]="extension" class="w-100 h-100 ">
-  <div *ngSwitchCase="'audio'" class="w-100">
-    <app-audio-module source="{{ source }}" class="w-100"> </app-audio-module>
+<div [ngSwitch]="extension" class="wh-100 ">
+  <div *ngSwitchCase="'audio'" class="wh-100">
+    <app-audio-module source="{{ source }}" class="wh-100"> </app-audio-module>
   </div>
-  <div *ngSwitchCase="'video'" class="w-100">
-    <app-video-module source="{{ source }}" class="w-100"> </app-video-module>
+  <div *ngSwitchCase="'video'" class="wh-100">
+    <app-video-module source="{{ source }}" class="wh-100"> </app-video-module>
   </div>
-  <div *ngSwitchCase="'image'" class="w-100">
-    <app-image-module source="{{ source }}" class="w-100"> </app-image-module>
+  <div *ngSwitchCase="'image'" class="wh-100">
+    <app-image-module source="{{ source }}" class="wh-100"> </app-image-module>
   </div>
-  <div *ngSwitchCase="'pdf'" class="w-100 h-100">
-    <app-pdf-module source="{{ source }}" *ngIf="1" class="w-100 h-100"> </app-pdf-module>
+  <div *ngSwitchCase="'pdf'" class="wh-100">
+    <app-pdf-module source="{{ source }}" *ngIf="1" class="wh-100"> </app-pdf-module>
   </div>
-  <div *ngSwitchCase="'svg'" class="w-100 ">
-    <app-svg-module source="{{ source }}" *ngIf="1" class="w-100 "> </app-svg-module>
+  <div *ngSwitchCase="'svg'" class="wh-100 ">
+    <app-svg-module source="{{ source }}" *ngIf="1" class="wh-100 "> </app-svg-module>
   </div>
-  <div *ngSwitchCase="'youtube'" class="w-100 h-90">
-    <app-youtube-module source="{{ source }}" *ngIf="1" class="w-100 "> </app-youtube-module>
+  <div *ngSwitchCase="'youtube'" class="wh-100 h-90">
+    <app-youtube-module source="{{ source }}" *ngIf="1" class="wh-100 "> </app-youtube-module>
   </div>
 </div>
