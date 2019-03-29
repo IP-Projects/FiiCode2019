@@ -60,6 +60,12 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
   getEntityUrl: string;
 
   @Input()
+  slideshow: boolean;
+
+  @Input()
+  lockSlideshow: boolean;
+
+  @Input()
   configPath: string;
 
   // used to redirect to the album
@@ -448,6 +454,15 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
           ) {
             this.getEntityUrl = config["getEntityUrl"];
           }
+          if (typeof config["slideshow"] != "undefined" && typeof this.slideshow == "undefined") {
+            this.slideshow = config["slideshow"];
+          }
+          if (
+            typeof config["lockSlideshow"] != "undefined" &&
+            typeof this.lockSlideshow == "undefined"
+          ) {
+            this.lockSlideshow = config["lockSlideshow"];
+          }
           this.loadDefault();
           if (typeof this.collectionUrl != "undefined") {
             this.loadCollectionsUntilScrollbarAppears();
@@ -489,7 +504,7 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
       this.skip = 0;
     }
     if (typeof this.take == "undefined") {
-      this.take = 0;
+      this.take = 10;
     }
     if (typeof this.bootstrapAccentPrimary == "undefined") {
       this.bootstrapAccentPrimary = "danger";
@@ -512,6 +527,12 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
     if (typeof this.getEntityUrl == "undefined") {
       this.getEntityUrl = "";
     }
+    if (typeof this.slideshow == "undefined") {
+      this.slideshow = false;
+    }
+    if (typeof this.lockSlideshow == "undefined") {
+      this.lockSlideshow = false;
+    }
 
     var albumInputs = {
       gridSize: this.gridSize,
@@ -524,7 +545,9 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
       suggestedEntityUrl: this.suggestedEntityUrl,
       deleteEntityUrl: this.deleteEntityUrl,
       addEntitiesUrl: this.addEntitiesUrl,
-      getEntityUrl: this.getEntityUrl
+      getEntityUrl: this.getEntityUrl,
+      lockSlideshow: this.lockSlideshow,
+      slideshow: this.slideshow
     };
     sessionStorage.setItem("albumInputs", JSON.stringify(albumInputs));
 

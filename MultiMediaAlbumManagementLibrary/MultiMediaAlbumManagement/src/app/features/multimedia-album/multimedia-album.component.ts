@@ -7,8 +7,6 @@ import { ApiService } from 'src/app/shared/api/api.service';
 import { SnakeService } from 'src/app/shared/easterEgg/snake.service';
 import { FloatingMicrophoneService } from 'src/app/shared/services/floating-microphone.service';
 
-import { GenerateThumbnailAndEntityService } from './services/generate-thumbnail-and-entity.service';
-
 @Component({
   selector: "app-multimedia-album",
   templateUrl: "./multimedia-album.component.html",
@@ -27,6 +25,8 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
   getEntityUrl;
   bootstrapAccentPrimary;
   bootstrapAccentSecondary;
+  slideshow;
+  lockSlideshow;
 
   _albumData;
   _searchText;
@@ -47,8 +47,7 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
     public snake: SnakeService,
     public router: Router,
     private route: ActivatedRoute,
-    private floatingMicrophone: FloatingMicrophoneService,
-    private thumbnail: GenerateThumbnailAndEntityService
+    private floatingMicrophone: FloatingMicrophoneService
   ) {}
 
   ngOnInit() {
@@ -285,6 +284,15 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
     this._upload = true;
   }
 
+  _cancel = false;
+  cancel() {
+    this._cancel = true;
+  }
+
+  discardedData(event) {
+    this._cancel = event;
+  }
+
   toggleDeleteButton() {
     if (this._deleteAccent == this.bootstrapAccentPrimary) {
       this._deleteAccent = this.bootstrapAccentSecondary;
@@ -306,6 +314,8 @@ export class MultimediaAlbumComponent implements OnInit, OnDestroy {
     this.deleteEntityUrl = albumInputOptions.deleteEntityUrl;
     this.addEntitiesUrl = albumInputOptions.addEntitiesUrl;
     this.getEntityUrl = albumInputOptions.getEntityUrl;
+    this.lockSlideshow = albumInputOptions.lockSlideshow;
+    this.slideshow = albumInputOptions.slideshow;
     this.bootstrapAccentPrimary = albumInputOptions.bootstrapAccentPrimary;
     this.bootstrapAccentSecondary = albumInputOptions.bootstrapAccentSecondary;
     this._deleteAccent = this.bootstrapAccentPrimary;

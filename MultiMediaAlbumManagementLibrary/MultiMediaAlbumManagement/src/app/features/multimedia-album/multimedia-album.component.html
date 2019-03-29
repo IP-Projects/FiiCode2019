@@ -70,7 +70,7 @@
 
 <!-- Modal Upload Files and Urls -->
 <div
-  class="modal fade"
+  class="modal fade roboto-font"
   id="addCollectionModal"
   tabindex="-1"
   role="dialog"
@@ -89,13 +89,21 @@
         <app-upload
           class="w-100 h-100"
           [upload]="_upload"
+          [cancel]="_cancel"
           [collectionId]="collectionId"
           [addEntitiesUrl]="addEntitiesUrl"
+          [bootstrapAccentSecondary]="bootstrapAccentSecondary"
           (newData)="addNewData($event)"
+          (discarded)="discardedData($event)"
         ></app-upload>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-{{ bootstrapAccentSecondary }}" data-dismiss="modal">
+        <button
+          type="button"
+          class="btn btn-{{ bootstrapAccentSecondary }}"
+          data-dismiss="modal"
+          (click)="cancel()"
+        >
           Close
         </button>
         <button
@@ -113,7 +121,7 @@
 
 <!-- Modal see Suggestions -->
 <div
-  class="modal fade"
+  class="modal fade roboto-font"
   id="seeSuggestionsModal"
   tabindex="-1"
   role="dialog"
@@ -160,7 +168,7 @@
 
 <!-- Delete Confirmation Modal -->
 <div
-  class="modal fade"
+  class="modal fade roboto-font"
   id="deleteConfirmationModal"
   tabindex="-1"
   role="dialog"

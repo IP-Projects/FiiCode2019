@@ -1,4 +1,4 @@
-<div [ngSwitch]="extension" class="w-100 h-100">
+<div [ngSwitch]="extension" class="w-100 h-100 ">
   <div *ngSwitchCase="'audio'" class="w-100">
     <app-audio-module source="{{ source }}" class="w-100"> </app-audio-module>
   </div>
@@ -14,7 +14,7 @@
   <div *ngSwitchCase="'svg'" class="w-100 ">
     <app-svg-module source="{{ source }}" *ngIf="1" class="w-100 "> </app-svg-module>
   </div>
-  <div *ngSwitchCase="'youtube'" class="w-100 ">
+  <div *ngSwitchCase="'youtube'" class="w-100 h-90">
     <app-youtube-module source="{{ source }}" *ngIf="1" class="w-100 "> </app-youtube-module>
   </div>
 </div>

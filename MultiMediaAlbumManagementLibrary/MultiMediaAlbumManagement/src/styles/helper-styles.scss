@@ -96,6 +96,14 @@ $amountOfSizes: 100;
       width: $i#{"%"};
     }
   }
+  .wh-#{$i} {
+    @include md {
+      width: $i#{"%"};
+    }
+    @include lg {
+      height: $i#{"%"};
+    }
+  }
   // .h-resizable-#{$i} {
 
   //   @include md {

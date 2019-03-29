@@ -41,3 +41,5 @@ gridSize="7"
 configPath="../../../assets/config.json"
 
 > </app-collection-of-multimedia-albums>
+
+maximum filesize is 20MB for sizes bigger than that refer to a hosting service and
