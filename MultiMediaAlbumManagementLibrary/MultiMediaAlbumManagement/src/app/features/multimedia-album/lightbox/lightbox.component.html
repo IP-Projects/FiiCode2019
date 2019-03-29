@@ -7,10 +7,7 @@
 >
   <span class="close cursor " (click)="closeEntityModal()">&times;</span>
   <div class="modalEntity-content  d-flex justify-content-center align-items-center">
-    <div
-      class="{{ 'my' + type + 'Slides' + ' wh-100' }}"
-      *ngFor="let entity of data; let i = index"
-    >
+    <div class="{{ 'my' + type + 'Slides' + ' wh-98' }}" *ngFor="let entity of data; let i = index">
       <app-album-loader
         *ngIf="slideIndex == i + 1"
         sourceUrl="{{ entityUrl }}"

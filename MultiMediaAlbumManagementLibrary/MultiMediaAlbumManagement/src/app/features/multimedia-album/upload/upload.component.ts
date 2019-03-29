@@ -315,7 +315,7 @@ export class UploadComponent implements OnInit, OnChanges, AfterViewInit {
 
   audioData(data, width, height, extension, fileName, isUrl, collectionId, fileSize) {
     const img = new Image();
-    img.src = "../../../assets/newCollection.jpg";
+    img.src = "../../../assets/music-icon.jpg";
     img.onload = () => {
       const canvas = document.createElement("canvas");
       canvas.width = width;

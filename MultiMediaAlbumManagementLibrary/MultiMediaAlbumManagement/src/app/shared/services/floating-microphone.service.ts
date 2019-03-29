@@ -16,8 +16,8 @@ export class FloatingMicrophoneService {
       pos2 = 0,
       pos3 = 0,
       pos4 = 0;
-    elem.style.top = window.innerHeight - 50 + "px";
-    elem.style.left = window.innerWidth - 50 + "px";
+    elem.style.top = window.innerHeight - 75 + "px";
+    elem.style.left = window.innerWidth - 75 + "px";
     if (elem) {
       elem.onmousedown = dragMouseDown;
     }

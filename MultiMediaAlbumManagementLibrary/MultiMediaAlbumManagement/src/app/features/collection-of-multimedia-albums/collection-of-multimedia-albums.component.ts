@@ -183,7 +183,7 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
           if (collection["placeholder"].length == 0) {
             collection["placeholder"] = [
               {
-                data: "../../../assets/newCollection.jpg"
+                data: "../../../assets/new-collection.jpg"
               }
             ];
           }
@@ -245,7 +245,7 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
           if (collection["placeholder"].length == 0) {
             collection["placeholder"] = [
               {
-                data: "../../../assets/newCollection.jpg"
+                data: "../../../assets/new-collection.jpg"
               }
             ];
           }
@@ -351,7 +351,7 @@ export class CollectionOfMultimediaAlbumsComponent implements OnInit, OnDestroy 
         console.log(data);
         data["placeholder"] = [
           {
-            data: "../../../assets/newCollection.jpg"
+            data: "../../../assets/new-collection.jpg"
           }
         ];
         this._collectionData = [...this._collectionData, data];
