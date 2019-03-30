@@ -14,6 +14,7 @@ The major features of this applications are:
 - touch gestures
 - responsive design
 - automated thumbnail creation for the various media files imported by either url or file
+- infinite scrolling
 
 # Installation
 
@@ -54,6 +55,21 @@ To use this distribution depending on your environment it can be as simple as im
 </body>
 ```
 
+For each screen there are different tags:
+
+- Collections page
+
+```
+  <collection-of-multimedia-albums></collection-of-multimedia-albums>
+
+```
+
+- Albums page
+
+```
+  <multimedia-album-standalone></multimedia-album-standalone>
+```
+
 Although I do not recommend using it inside angular, due to duplicate libraries, I will explain the importing method in it.
 
 Open your app.module.ts file, add in these lines:
@@ -77,7 +93,7 @@ imports: [...,NgxMultiMediaAlbumManagementModule...]
 })
 ```
 
-Then copy the content of the assets folder in your own assets folder and import in your styles.scss helper-styles.scss or if you use plain css then import in your styles.css the styles.css file from the folder's module.
+Copy the content of the assets folder in your own assets folder and import in your styles.scss helper-styles.scss or if you use plain css then import in your styles.css the styles.css file from the folder's module.
 
 In angular.json make sure you have following lines:
 
@@ -90,6 +106,21 @@ In angular.json make sure you have following lines:
     "node_modules/bootstrap/dist/js/bootstrap.min.js"
 
 ],
+```
+
+Then you can use the following 2 components :
+
+- Collections page
+
+```
+  <app-collection-of-multimedia-albums></app-collection-of-multimedia-albums>
+
+```
+
+- Albums page
+
+```
+  <app-stand-alone></app-stand-alone>
 ```
 
 # Costumizations
@@ -201,6 +232,16 @@ The microphone icon can be moved around the screen
 - add - opens the add modal
 - tip/suggestion/recommendations - opens the suggested modal
 - snake - initializes the snake game
+
+# Infinite scrolling / loading
+
+This feature is controlled changing the "take" and "skip" parameters. If you want to load the entire database at once then you can set the "take" at a very large number, otherwise set it to fit your needs, default value is set to 10.
+The loading logic is the following:
+
+- If there is enough room left on the screen before you have to scroll, then the application will send a new request for new data. This will happen as long as the scroll bar didn't appear or as long as there is still data
+- If you are viewing a file and click next / swipe left then a request for new data will be send, if there are no more data, then the first file will be displayed
+
+This feature is applied for both Collections page and Albums page
 
 # Limitations
 
